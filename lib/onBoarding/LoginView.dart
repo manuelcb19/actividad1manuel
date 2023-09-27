@@ -2,6 +2,7 @@
 
 
 import 'package:actividad1manuel/componentes/customTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -10,7 +11,15 @@ class LoginView extends StatelessWidget {
 
   TextEditingController usuarioControlador = TextEditingController();
   TextEditingController usuarioPassword = TextEditingController();
-  TextEditingController usuarioPasswordVerificar = TextEditingController();
+
+  void onClickRegistrar(){
+    Navigator.of(_context).pushNamed("/registerview");
+  }
+
+  void onClickAceptar() async{
+
+
+  }
 
   void showMyDialog(String mensaje) async {
     return showDialog<void>(
@@ -43,6 +52,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     // TODO: implement build
     Column columna = Column(children: [
       Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
@@ -55,9 +65,13 @@ class LoginView extends StatelessWidget {
           child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword)
       ),
 
-      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "Repita su contraseña", tecUsername: usuarioPasswordVerificar)
-      ),
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          //TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+          TextButton( onPressed: onClickRegistrar, child: Text("REGISTRO"),),
+          TextButton( onPressed: onClickAceptar, child: Text("REGISTRO"),)
+        ],)
+
      ],
     );
 

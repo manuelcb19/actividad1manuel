@@ -19,6 +19,32 @@ class LoginView extends StatelessWidget {
   void onClickAceptar() async{
 
 
+    showMyDialog(usuarioControlador.text+"casaasaaa");
+/*
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: usuarioControlador.text,
+          password: usuarioPassword.text
+      );
+
+      //Navigator.of(_context).pushNamed("/registerview");
+      print(">>>>>>>>>>>>>>>>>>>>>>> me he logeado");
+      showMyDialog(usuarioControlador.text);
+
+    } on FirebaseAuthException catch (e) {
+     showMyDialog("usuario no encontrado "+e.code);
+
+      if (e.code == 'user-not-found') {
+
+        print('The password provided is too weak.');
+        showMyDialog("El usuario no existe");
+
+      } else if (e.code == 'wrong-password') {
+        showMyDialog("contraseña incorrecta");
+        print('The account already exists for that email.');
+      }
+    }
+*/
   }
 
   void showMyDialog(String mensaje) async {
@@ -67,9 +93,9 @@ class LoginView extends StatelessWidget {
 
       Row(mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-          TextButton( onPressed: onClickRegistrar, child: Text("REGISTRO"),),
-          TextButton( onPressed: onClickAceptar, child: Text("REGISTRO"),)
+          TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+          TextButton( onPressed: onClickRegistrar, child: Text("Registrar"),),
+
         ],)
 
      ],

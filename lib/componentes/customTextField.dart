@@ -27,8 +27,4 @@ class customTextField extends StatelessWidget
     return row;
   }
 
-
-
-
-
 }

@@ -1,27 +1,22 @@
 
-
-
-
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../componentes/customTextField.dart';
 
-class RegisterView extends StatelessWidget
-{
+class RegisterView extends StatelessWidget{
 
   late BuildContext _context;
 
-  TextEditingController usuarioControlador = TextEditingController();
-  TextEditingController usuarioPassword = TextEditingController();
+  TextEditingController usuarioController = TextEditingController();
+  TextEditingController passwordMyController = TextEditingController();
+  TextEditingController passwordconfirmationMyController = TextEditingController();
+  //SnackBar snackBar = SnackBar(content: Text("wololoooooo"),);
 
-  void onClickRegistrar(){
-    Navigator.of(_context).pushNamed("/registerview");
-  }
+  void onClickCancelar(){
 
-  void onClickAceptar() async{
-
+    Navigator.of(_context).pushNamed("/loginview");
 
   }
 
@@ -54,30 +49,83 @@ class RegisterView extends StatelessWidget
   }
 
 
+  void onClickAceptar() async {
+
+
+    if(passwordMyController.text == passwordconfirmationMyController.text)
+    {
+      try {
+
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+
+          email: usuarioController.text,
+          password: passwordMyController.text,
+
+        );
+
+      }
+
+      on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          showMyDialog("contraseña menor a 6 caracteres");
+          print('The password provided is too weak.');
+
+        } else if (e.code == 'email-already-in-use') {
+          showMyDialog("el emaul ya existe");
+          print('The account already exists for that email.');
+
+        }
+
+        Navigator.of(_context).pushNamed("/menuview");
+      }
+      catch (e) {
+        print(e);
+      }
+    }
+    else
+    {
+      showMyDialog("la contraseña no son iguales");
+    }
+
+    //ScaffoldMessenger.of(_context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _context = context;
     // TODO: implement build
+    //Text texto=Text("Hola Mundo desde Kyty");
+    //return texto;
+    _context=context;
+
     Column columna = Column(children: [
-      Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
+      Text("Bienvenido a Kyty Register",style: TextStyle(fontSize: 25)),
+
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador)
+          child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioController)
+      ),
+
+      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+          child:  customTextField(contenido: "introduzca su usuario", tecUsername: passwordMyController)
+      ),
+
+      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+          child:  customTextField(contenido: "introduzca su usuario", tecUsername: passwordconfirmationMyController)
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-          TextButton( onPressed: onClickAceptar, child: Text("Aceptar"),),
-          TextButton( onPressed: onClickRegistrar, child: Text("REGISTRO"),)
+          TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+          TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
 
         ],)
 
-    ],
-    );
+    ],);
+
+
 
     AppBar appBar = AppBar(
-      title: const Text('Login'),
+      title: const Text('Register'),
       centerTitle: true,
       shadowColor: Colors.pink,
       backgroundColor: Colors.greenAccent,

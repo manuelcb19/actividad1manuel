@@ -16,6 +16,7 @@ class customTextField extends StatelessWidget
     Row row = Row(
       children: [
         Flexible(child : TextFormField(
+          controller: tecUsername,
           decoration: InputDecoration(
               border:  OutlineInputBorder(),
               hintText: contenido

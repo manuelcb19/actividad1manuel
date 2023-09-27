@@ -18,9 +18,6 @@ class LoginView extends StatelessWidget {
 
   void onClickAceptar() async{
 
-
-    showMyDialog(usuarioControlador.text+"casaasaaa");
-/*
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: usuarioControlador.text,
@@ -44,7 +41,7 @@ class LoginView extends StatelessWidget {
         print('The account already exists for that email.');
       }
     }
-*/
+
   }
 
   void showMyDialog(String mensaje) async {

@@ -1,9 +1,9 @@
 
-
-
-import 'package:actividad1manuel/componentes/customTextField.dart';
+import 'package:actividad1manuel/componentes/CustomTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../componentes/CustomDialog.dart';
 
 class LoginView extends StatelessWidget {
 
@@ -16,62 +16,39 @@ class LoginView extends StatelessWidget {
     Navigator.of(_context).pushNamed("/registerview");
   }
 
-  void onClickAceptar() async{
+  void onClickAceptar() async {
 
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: usuarioControlador.text,
-          password: usuarioPassword.text
-      );
 
-      //Navigator.of(_context).pushNamed("/registerview");
-      print(">>>>>>>>>>>>>>>>>>>>>>> me he logeado");
-      showMyDialog(usuarioControlador.text);
+    if (usuarioControlador.text.isEmpty || usuarioPassword.text.isEmpty) {
 
-    } on FirebaseAuthException catch (e) {
-     showMyDialog("usuario no encontrado "+e.code);
-
-      if (e.code == 'user-not-found') {
-
-        print('The password provided is too weak.');
-        showMyDialog("El usuario no existe");
-
-      } else if (e.code == 'wrong-password') {
-        showMyDialog("contraseña incorrecta");
-        print('The account already exists for that email.');
-      }
+      CustomDialog.show(_context, "Existen algún campo vacío, por favor, compruébalo");
     }
 
-  }
-
-  void showMyDialog(String mensaje) async {
-    return showDialog<void>(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(mensaje),
-                Text(mensaje),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+    else {
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+            email: usuarioControlador.text,
+            password: usuarioPassword.text
         );
-      },
-    );
-  }
+        Navigator.of(_context).pushNamed("/registerview");
 
+      } on FirebaseAuthException catch (e) {
+
+        CustomDialog.show(_context, "Usuario no encontrado");
+
+        if (e.code == 'user-not-found') {
+
+          CustomDialog.show(_context, "El usuario no existe");
+
+        } else if (e.code == 'wrong-password') {
+
+          CustomDialog.show(_context, "contraseña incorrecta");
+
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +85,6 @@ class LoginView extends StatelessWidget {
     Scaffold scaf=Scaffold(body: columna,
     //backgroundColor: Colors.deepOrange,
     appBar: appBar,);
-
     return scaf;
   }
-
 }

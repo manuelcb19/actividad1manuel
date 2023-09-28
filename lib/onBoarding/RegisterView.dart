@@ -1,9 +1,10 @@
 
+import 'package:actividad1manuel/componentes/CustomDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../componentes/customTextField.dart';
+import '../componentes/CustomTextField.dart';
 
 class RegisterView extends StatelessWidget{
 
@@ -20,37 +21,20 @@ class RegisterView extends StatelessWidget{
 
   }
 
-  void showMyDialog(String mensaje) async {
-    return showDialog<void>(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(mensaje),
-                Text(mensaje),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
   void onClickAceptar() async {
 
+    int numero = 2;
+
+    switch(passwordMyController.text == passwordconfirmationMyController.text){
+
+      case true:
+
+
+        break;
+      case false:
+        break;
+
+    }
 
     if(passwordMyController.text == passwordconfirmationMyController.text)
     {
@@ -67,12 +51,11 @@ class RegisterView extends StatelessWidget{
 
       on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          showMyDialog("contraseña menor a 6 caracteres");
-          print('The password provided is too weak.');
+          CustomDialog.show(_context, "contraseña menor a 6 caracteres");
 
         } else if (e.code == 'email-already-in-use') {
-          showMyDialog("el emaul ya existe");
-          print('The account already exists for that email.');
+
+          CustomDialog.show(_context, "el email ya existe");
 
         }
 
@@ -84,7 +67,7 @@ class RegisterView extends StatelessWidget{
     }
     else
     {
-      showMyDialog("la contraseña no son iguales");
+      CustomDialog.show(_context, "Las contraseñas no son iguales");
     }
 
     //ScaffoldMessenger.of(_context).showSnackBar(snackBar);

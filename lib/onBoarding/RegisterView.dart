@@ -23,53 +23,53 @@ class RegisterView extends StatelessWidget{
 
   void onClickAceptar() async {
 
-    int numero = 2;
 
-    switch(passwordMyController.text == passwordconfirmationMyController.text){
+    switch(usuarioController.text.isEmpty || passwordMyController.text.isEmpty || passwordconfirmationMyController.text.isEmpty){
 
       case true:
 
-
+        CustomDialog.show(_context, "Algun campo de los existente se encuentra vacio, por favor, rellenalo");
         break;
+
       case false:
-        break;
 
-    }
+        if(passwordMyController.text == passwordconfirmationMyController.text)
+        {
+          try {
 
-    if(passwordMyController.text == passwordconfirmationMyController.text)
-    {
-      try {
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: usuarioController.text,
+              password: passwordMyController.text,
+            );
+          }
+          on FirebaseAuthException catch (e) {
 
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            if (e.code == 'weak-password') {
 
-          email: usuarioController.text,
-          password: passwordMyController.text,
+              CustomDialog.show(_context, "contraseña menor a 6 caracteres");
 
-        );
 
-      }
+            } else if (e.code == 'email-already-in-use') {
 
-      on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          CustomDialog.show(_context, "contraseña menor a 6 caracteres");
+              CustomDialog.show(_context, "el email ya existe");
 
-        } else if (e.code == 'email-already-in-use') {
 
-          CustomDialog.show(_context, "el email ya existe");
+            }
 
+            Navigator.of(_context).pushNamed("/menuview");
+          }
+          catch (e) {
+            print(e);
+          }
         }
 
-        Navigator.of(_context).pushNamed("/menuview");
-      }
-      catch (e) {
-        print(e);
-      }
-    }
-    else
-    {
-      CustomDialog.show(_context, "Las contraseñas no son iguales");
-    }
+        else
+          {
+            CustomDialog.show(_context, "Las contraseñas no son iguales");
+          }
 
+        break;
+    }
     //ScaffoldMessenger.of(_context).showSnackBar(snackBar);
   }
 

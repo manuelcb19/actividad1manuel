@@ -77,11 +77,11 @@ class LoginView extends StatelessWidget {
               Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
 
               Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador)
+                  child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador, oscuro: false,)
               ),
 
               Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword)
+                  child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword, oscuro: true,)
               ),
 
               Row(mainAxisAlignment: MainAxisAlignment.center,

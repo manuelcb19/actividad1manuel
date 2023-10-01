@@ -104,15 +104,15 @@ class RegisterView extends StatelessWidget{
 
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioController)
+          child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioController,oscuro: false,)
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su contraseña", tecUsername: passwordMyController)
+          child:  customTextField(contenido: "introduzca su contraseña", tecUsername: passwordMyController, oscuro: true,)
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca la contraseña de nuevo", tecUsername: passwordconfirmationMyController)
+          child:  customTextField(contenido: "introduzca la contraseña de nuevo", tecUsername: passwordconfirmationMyController, oscuro: true,)
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center,

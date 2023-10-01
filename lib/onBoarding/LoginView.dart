@@ -31,11 +31,12 @@ class LoginView extends StatelessWidget {
             email: usuarioControlador.text,
             password: usuarioPassword.text
         );
-        Navigator.of(_context).pushNamed("/registerview");
+
+        Navigator.of(_context).pushNamed("/menuview");
 
       } on FirebaseAuthException catch (e) {
 
-        CustomDialog.show(_context, "Usuario no encontrado");
+        CustomDialog.show(_context, "Usuario o contraseña incorrectos");
 
         if (e.code == 'user-not-found') {
 
@@ -47,6 +48,8 @@ class LoginView extends StatelessWidget {
 
         }
       }
+
+
     }
   }
 
@@ -54,6 +57,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     _context = context;
     // TODO: implement build
+
     Column columna = Column(children: [
       Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
 

@@ -16,7 +16,7 @@ class Actividad1 extends StatelessWidget{
         '/registerview':(context) => RegisterView(),
         '/menuview':(context) => MenuView(),
       },
-      initialRoute: '/menuview',
+      initialRoute: '/loginview',
     );
 
     return materialApp;

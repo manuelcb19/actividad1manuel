@@ -48,8 +48,6 @@ class LoginView extends StatelessWidget {
 
         }
       }
-
-
     }
   }
 
@@ -58,37 +56,43 @@ class LoginView extends StatelessWidget {
     _context = context;
     // TODO: implement build
 
-    Column columna = Column(children: [
-      Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Perfil'),
+          centerTitle: true,
+          shadowColor: Colors.purple[600],
+          backgroundColor: Colors.purple[600],
+        ),
+        body:
+        ConstrainedBox(constraints: BoxConstraints(
+          minWidth: 500,
+          minHeight: 700,
+          maxWidth: 1000,
+          maxHeight: 900,
+        ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
 
-      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-        child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador)
-      ),
+            children: [
+              Text("Bienvenido a Actividad 1", style: TextStyle(fontSize: 25)),
 
-      Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword)
-      ),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                  child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador)
+              ),
 
-      Row(mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-          TextButton( onPressed: onClickRegistrar, child: Text("Registrar"),),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                  child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword)
+              ),
 
-        ],)
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+                  TextButton( onPressed: onClickRegistrar, child: Text("Registrar"),),
 
-     ],
+                ],)
+
+            ],
+          ),)
     );
-
-    AppBar appBar = AppBar(
-    title: const Text('Login'),
-    centerTitle: true,
-    shadowColor: Colors.pink,
-    backgroundColor: Colors.greenAccent,
-    );
-
-    Scaffold scaf=Scaffold(body: columna,
-    //backgroundColor: Colors.deepOrange,
-    appBar: appBar,);
-    return scaf;
   }
 }

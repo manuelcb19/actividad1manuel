@@ -75,12 +75,27 @@ class RegisterView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     // TODO: implement build
-    //Text texto=Text("Hola Mundo desde Kyty");
-    //return texto;
-    _context=context;
 
-    Column columna = Column(children: [
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Perfil'),
+          centerTitle: true,
+          shadowColor: Colors.purple[600],
+          backgroundColor: Colors.purple[600],
+        ),
+        body:
+        ConstrainedBox(constraints: BoxConstraints(
+          minWidth: 500,
+          minHeight: 700,
+          maxWidth: 1000,
+          maxHeight: 900,
+        ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: [
       Text("Bienvenido a Kyty Register",style: TextStyle(fontSize: 25)),
 
 
@@ -89,11 +104,11 @@ class RegisterView extends StatelessWidget{
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su usuario", tecUsername: passwordMyController)
+          child:  customTextField(contenido: "introduzca su contraseña", tecUsername: passwordMyController)
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su usuario", tecUsername: passwordconfirmationMyController)
+          child:  customTextField(contenido: "introduzca la contraseña de nuevo", tecUsername: passwordconfirmationMyController)
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -103,22 +118,9 @@ class RegisterView extends StatelessWidget{
 
         ],)
 
-    ],);
-
-
-
-    AppBar appBar = AppBar(
-      title: const Text('Register'),
-      centerTitle: true,
-      shadowColor: Colors.pink,
-      backgroundColor: Colors.greenAccent,
+            ],
+          ),)
     );
-
-    Scaffold scaf=Scaffold(body: columna,
-      //backgroundColor: Colors.deepOrange,
-      appBar: appBar,);
-
-    return scaf;
   }
 
 }

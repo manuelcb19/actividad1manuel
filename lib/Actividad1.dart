@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'onBoarding/LoginView.dart';
+import 'onBoarding/MenuView.dart';
 import 'onBoarding/RegisterView.dart';
 
 class Actividad1 extends StatelessWidget{
@@ -13,8 +14,9 @@ class Actividad1 extends StatelessWidget{
       routes: {
         '/loginview':(context) => LoginView(),
         '/registerview':(context) => RegisterView(),
+        '/menuview':(context) => MenuView(),
       },
-      initialRoute: '/loginview',
+      initialRoute: '/menuview',
     );
 
     return materialApp;

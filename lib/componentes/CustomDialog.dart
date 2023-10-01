@@ -3,8 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class CustomDialog {
 
   static void show(BuildContext context, String message) {

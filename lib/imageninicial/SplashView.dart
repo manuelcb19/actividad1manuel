@@ -18,6 +18,25 @@ class SplashView extends StatefulWidget {
   late BuildContext _context;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkSession();
+  }
+
+  void checkSession() async{
+    await Future.delayed(Duration(seconds: 3));
+    if (FirebaseAuth.instance.currentUser != null) {
+
+      Navigator.of(_context).popAndPushNamed("/menuview");
+    }
+    else{
+      Navigator.of(_context).popAndPushNamed("/loginview");
+    }
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     _context = context;
 

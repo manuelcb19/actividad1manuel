@@ -1,4 +1,5 @@
 
+import 'package:actividad1manuel/imageninicial/SplashView.dart';
 import 'package:flutter/material.dart';
 
 import 'onBoarding/LoginView.dart';
@@ -15,8 +16,10 @@ class Actividad1 extends StatelessWidget{
         '/loginview':(context) => LoginView(),
         '/registerview':(context) => RegisterView(),
         '/menuview':(context) => MenuView(),
-      },
-      initialRoute: '/loginview',
+        '/splashview':(context) => SplashView(),
+    },
+
+      initialRoute: '/splashview',
     );
 
     return materialApp;

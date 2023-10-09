@@ -14,16 +14,17 @@ class PerfilView extends StatelessWidget {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
 
-  void onClickAceptar() {
+  void onClickAceptar() async {
     final usuario = <String, dynamic>{
       "nombre": tecNombre.text,
       "edad": int.parse(tecEdad.text),
+      
     };
 
-    db.collection("Usuarios").add(usuario);
+    //db.collection("Usuarios").add(usuario);
 
-   // String uidUsuario= FirebaseAuth.instance.currentUser!.uid;
-   // db.collection("Usuarios").doc(uidUsuario).set(usuario);
+   String uidUsuario= FirebaseAuth.instance.currentUser!.uid;
+   db.collection("Usuarios").doc(uidUsuario).set(usuario);
 
   }
 

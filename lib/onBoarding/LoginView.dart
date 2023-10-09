@@ -1,12 +1,13 @@
 
 import 'package:actividad1manuel/componentes/CustomTextField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../componentes/CustomDialog.dart';
 
 class LoginView extends StatelessWidget {
 
+  FirebaseFirestore db = FirebaseFirestore.instance;
   late BuildContext _context;
 
   TextEditingController usuarioControlador = TextEditingController();
@@ -32,8 +33,18 @@ class LoginView extends StatelessWidget {
             password: usuarioPassword.text
         );
 
-        Navigator.of(_context).pushNamed("/menuview");
+        String uid=FirebaseAuth.instance.currentUser!.uid;
+        DocumentSnapshot<Map<String, dynamic>> datos = await
+            db.collection("Usuarios").doc(uid).get();
 
+        if (datos.exists){
+          Navigator.of(_context).popAndPushNamed("/menuview");
+
+        }
+
+        else{
+          Navigator.of(_context).popAndPushNamed("/perfilview");
+        }
       } on FirebaseAuthException catch (e) {
 
         CustomDialog.show(_context, "Usuario o contraseña incorrectos");
@@ -58,7 +69,7 @@ class LoginView extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Perfil'),
+          title: const Text('Login'),
           centerTitle: true,
           shadowColor: Colors.purple[600],
           backgroundColor: Colors.purple[600],

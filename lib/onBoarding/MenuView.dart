@@ -12,7 +12,7 @@ class MenuView extends StatelessWidget{
 
     // TODO: implement build
     AppBar appBar = AppBar(
-      title: const Text('Login'),
+      title: const Text('Menu'),
       centerTitle: true,
       shadowColor: Colors.pink,
       backgroundColor: Colors.greenAccent,

@@ -1,6 +1,7 @@
 
 
 
+import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +30,26 @@ class _SplashViewState extends State<SplashView>{
 
     if (FirebaseAuth.instance.currentUser != null) {
 
-      String uid=FirebaseAuth.instance.currentUser!.uid;
-       DocumentSnapshot<Map<String, dynamic>> datos=await db.collection("Usuarios").doc(uid).get();
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
-      if(datos.exists){
+      DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
+        toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
+
+        CustomUsuario usuario;
+
+          DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
+          usuario = docSnap.data()!;
+
+      if (usuario != null) {
         Navigator.of(context).popAndPushNamed("/homeview");
 
       }
 
       else{
+
         Navigator.of(context).popAndPushNamed("/perfilview");
-
       }
-
-    }
+  }
 
     else{
       Navigator.of(context).popAndPushNamed("/loginview");

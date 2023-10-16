@@ -7,14 +7,28 @@ import 'package:flutter/material.dart';
 
 import '../componentes/CustomTextField.dart';
 
-class HomeView extends StatelessWidget{
+class HomeView extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _HomeViewState();
+  }
+}
 
-  late BuildContext _context;
+class _HomeViewState extends State<HomeView>{
+
   TextEditingController bdUsuarioNombre = TextEditingController();
   TextEditingController bdUsuarioEdad = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  void onClickAceptar() async {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    conseguirUsuario();
+  }
+
+  void conseguirUsuario() async {
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -28,6 +42,14 @@ class HomeView extends StatelessWidget{
 
     print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.nombre);
     print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.edad.toString());
+
+  }
+
+  void onClickAceptar()
+  {
+
+
+
 
   }
 
@@ -48,17 +70,18 @@ class HomeView extends StatelessWidget{
           maxWidth: 1000,
           maxHeight: 900,
         ),
-          child: Column(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "Este es el menu", tecUsername: bdUsuarioNombre,oscuro: false,)
+          child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: <Widget>[
+              Container(
+                height: 50,
+                color: Colors.amber[600],
+                child: const Center(child: Text('Entry A')),
               ),
-
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "Este es el menu", tecUsername: bdUsuarioEdad, oscuro: false,)
+              Container(
+                height: 50,
+                color: Colors.amber[500],
+                child: const Center(child: Text('Entry B')),
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -69,10 +92,8 @@ class HomeView extends StatelessWidget{
                   ]
               )
             ],
-          ),)
+          ),
+        )
     );
-
   }
-
-
 }

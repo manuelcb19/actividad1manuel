@@ -38,7 +38,7 @@ class LoginView extends StatelessWidget {
             db.collection("Usuarios").doc(uid).get();
 
         if (datos.exists){
-          Navigator.of(_context).popAndPushNamed("/menuview");
+          Navigator.of(_context).popAndPushNamed("/homeview");
 
         }
 

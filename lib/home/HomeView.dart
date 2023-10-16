@@ -1,10 +1,10 @@
-import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
+
 import 'package:actividad1manuel/componentes/CustomDialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../FbClases/CustomUsuario.dart';
 import '../componentes/CustomTextField.dart';
 
 class HomeView extends StatefulWidget{
@@ -17,15 +17,22 @@ class HomeView extends StatefulWidget{
 
 class _HomeViewState extends State<HomeView>{
 
-  TextEditingController bdUsuarioNombre = TextEditingController();
-  TextEditingController bdUsuarioEdad = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
+
+  TextEditingController nombreController = TextEditingController();
+  TextEditingController edadController = TextEditingController();
+
+  String datosUsuarios = " dddd";
+  String edadUsuario= " ";
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     conseguirUsuario();
+
   }
 
   void conseguirUsuario() async {
@@ -40,8 +47,9 @@ class _HomeViewState extends State<HomeView>{
     DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
     usuario = docSnap.data()!;
 
-    print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.nombre);
-    print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.edad.toString());
+   datosUsuarios = usuario.nombre;
+   edadUsuario = usuario.edad.toString();
+
 
   }
 
@@ -49,8 +57,14 @@ class _HomeViewState extends State<HomeView>{
   {
 
 
+      setState(() {
+        datosUsuarios = nombreController.text;
+        edadUsuario = edadController.text;
+      });
 
-
+    print("casa");
+    print(datosUsuarios);
+    print(edadUsuario.toString());
   }
 
   @override
@@ -76,19 +90,18 @@ class _HomeViewState extends State<HomeView>{
               Container(
                 height: 50,
                 color: Colors.amber[600],
-                child: const Center(child: Text('Entry A')),
+                child: Center(child: Text(datosUsuarios)),
               ),
               Container(
                 height: 50,
                 color: Colors.amber[500],
-                child: const Center(child: Text('Entry B')),
+                child: Center(child: Text(edadUsuario)),
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
                     TextButton(onPressed: onClickAceptar, child: Text("Consultar Datos"),),
-
                   ]
               )
             ],

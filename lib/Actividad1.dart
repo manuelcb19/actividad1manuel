@@ -3,7 +3,7 @@ import 'package:actividad1manuel/imageninicial/SplashView.dart';
 import 'package:flutter/material.dart';
 
 import 'onBoarding/LoginView.dart';
-import 'onBoarding/MenuView.dart';
+import 'onBoarding/HomeView.dart';
 import 'onBoarding/PerfilView.dart';
 import 'onBoarding/RegisterView.dart';
 
@@ -16,7 +16,7 @@ class Actividad1 extends StatelessWidget{
       routes: {
         '/loginview':(context) => LoginView(),
         '/registerview':(context) => RegisterView(),
-        '/menuview':(context) => MenuView(),
+        '/menuview':(context) => HomeView(),
         '/splashview':(context) => SplashView(),
         '/perfilview':(context) => PerfilView(),
     },

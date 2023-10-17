@@ -20,7 +20,7 @@ class CustomCellView extends StatelessWidget{
         color: Colors.amber[iCodigoColor],
         child: Row(
           children: [
-            Image.asset("resources/logoInicio.png",width: 30,
+            Image.asset("/home/alumno1/StudioProjects/actividad/resources/logoInicio.png",width: 30,
                 height: 45),
             Text(sTexto)
           ],

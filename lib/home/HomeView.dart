@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView>{
       appBar: AppBar(title: Text("KYTY"),),
       body: ListView.separated(
         padding: EdgeInsets.all(8),
-        itemCount: miDiccionario.length,
+        itemCount: 1,
         itemBuilder: creadorDeItemLista,
         separatorBuilder: creadorDeSeparadorLista,
       ),

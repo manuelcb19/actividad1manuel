@@ -1,3 +1,4 @@
+import 'package:actividad1manuel/ClasesPropias/CustomGredCellView.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomCellView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -59,7 +60,26 @@ class _HomeViewState extends State<HomeView>{
         };
       });
   }
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(title: Text("KYTY"),),
+      body: Center(
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+            ),
+            itemCount: 3,
+            itemBuilder: creadorDeItemMatriz
+        ),
+      ),
 
+    );
+  }
+  /*
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -67,13 +87,13 @@ class _HomeViewState extends State<HomeView>{
       appBar: AppBar(title: Text("KYTY"),),
       body: ListView.separated(
         padding: EdgeInsets.all(8),
-        itemCount: 1,
+        itemCount: 3,
         itemBuilder: creadorDeItemLista,
         separatorBuilder: creadorDeSeparadorLista,
       ),
     );
   }
-
+*/
   String recorrerDiccionario(Map diccionario) {
     String valores = '';
 
@@ -85,7 +105,18 @@ class _HomeViewState extends State<HomeView>{
   }
 
   Widget? creadorDeItemLista(BuildContext context, int index){
-    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario), iCodigoColor: 50, dFuenteTamanyo: 20);
+    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario),
+        iCodigoColor: 50,
+        dFuenteTamanyo: 20);
+  }
+
+
+
+  Widget? creadorDeItemMatriz(BuildContext context, int index){
+    return CustomGredCellView(sText: recorrerDiccionario(miDiccionario),
+      dFontSize: 20,
+      iColorCode: 0,
+    );
   }
 
   Widget creadorDeSeparadorLista(BuildContext context, int index) {

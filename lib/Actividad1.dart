@@ -21,7 +21,7 @@ class Actividad1 extends StatelessWidget{
         '/perfilview':(context) => PerfilView(),
     },
 
-      initialRoute: '/homeview',
+      initialRoute: '/splashview',
     );
 
     return materialApp;

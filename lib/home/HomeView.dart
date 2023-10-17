@@ -1,5 +1,5 @@
 import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
-import 'package:actividad1manuel/componentes/CustomDialog.dart';
+import 'package:actividad1manuel/ClasesPropias/CustomCellView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,9 +17,15 @@ class HomeView extends StatefulWidget{
 
 class _HomeViewState extends State<HomeView>{
 
+
   TextEditingController bdUsuarioNombre = TextEditingController();
   TextEditingController bdUsuarioEdad = TextEditingController();
+  
   FirebaseFirestore db = FirebaseFirestore.instance;
+  
+  late CustomUsuario perfil;
+
+  Map<String, dynamic> miDiccionario = {};
 
   @override
   void initState() {
@@ -30,70 +36,63 @@ class _HomeViewState extends State<HomeView>{
 
   void conseguirUsuario() async {
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
-      toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
+      DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
+          uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
+        toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
 
-    CustomUsuario usuario;
+      CustomUsuario usuario;
 
-    DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
-    usuario = docSnap.data()!;
+      DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
+      usuario = docSnap.data()!;
+      print("Se ha cargado el usuario su nombre es "+usuario.nombre+" y su edad es: "+ usuario.edad.toString());
 
-    print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.nombre);
-    print("!!!!!!!!!!!!!!!!!!!!!!!"+usuario.edad.toString());
+      perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
 
-  }
+      print("Se ha cargado el perfil su nombre es "+perfil.nombre+" y su edad es: "+ perfil.edad.toString());
 
-  void onClickAceptar()
-  {
-
-
-
-
+      setState(() {
+        miDiccionario = {
+          'Nombre': usuario.nombre,
+          'Edad': usuario.edad,
+        };
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-
+    // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Perfil'),
-          centerTitle: true,
-          shadowColor: Colors.pink,
-          backgroundColor: Colors.deepOrange,
-        ),
-        body:
-        ConstrainedBox(constraints: BoxConstraints(
-          minWidth: 500,
-          minHeight: 700,
-          maxWidth: 1000,
-          maxHeight: 900,
-        ),
-          child: ListView(
-            padding: const EdgeInsets.all(8),
-            children: <Widget>[
-              Container(
-                height: 50,
-                color: Colors.amber[600],
-                child: const Center(child: Text('Entry A')),
-              ),
-              Container(
-                height: 50,
-                color: Colors.amber[500],
-                child: const Center(child: Text('Entry B')),
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+      appBar: AppBar(title: Text("KYTY"),),
+      body: ListView.separated(
+        padding: EdgeInsets.all(8),
+        itemCount: miDiccionario.length,
+        itemBuilder: creadorDeItemLista,
+        separatorBuilder: creadorDeSeparadorLista,
+      ),
+    );
+  }
 
-                    TextButton(onPressed: onClickAceptar, child: Text("Consultar Datos"),),
+  String recorrerDiccionario(Map diccionario) {
+    String valores = '';
 
-                  ]
-              )
-            ],
-          ),
-        )
+    for (String p in diccionario.keys) {
+      dynamic valor = diccionario[p];
+      valores += p+ " : " + valor.toString() + " ";
+    }
+    return valores;
+  }
+
+  Widget? creadorDeItemLista(BuildContext context, int index){
+    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario), iCodigoColor: 50, dFuenteTamanyo: 20);
+  }
+
+  Widget creadorDeSeparadorLista(BuildContext context, int index) {
+    return Column(
+      children: [
+        Divider(),
+      ],
     );
   }
 }

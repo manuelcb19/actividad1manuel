@@ -64,7 +64,7 @@ class _HomeViewState extends State<HomeView>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("KYTY"),),
+      appBar: AppBar(title: Text("Libreria(Nombre provisional no final)"),),
       body: Center(
         child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

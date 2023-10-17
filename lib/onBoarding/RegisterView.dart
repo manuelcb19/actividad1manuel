@@ -100,7 +100,7 @@ class RegisterView extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
 
             children: [
-      Text("Bienvenido a Kyty Register",style: TextStyle(fontSize: 25)),
+      Text("Bienvenido a libreria Register",style: TextStyle(fontSize: 25)),
 
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),

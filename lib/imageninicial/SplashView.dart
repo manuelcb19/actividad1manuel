@@ -64,7 +64,7 @@ class _SplashViewState extends State<SplashView>{
 
     Column column=Column(
       children: [
-        Image.asset("/home/alumno1/StudioProjects/actividad/resources/logoInicio.png",width: 300,
+        Image.asset("resources/imagenInicial.png",width: 300,
             height: 450),
         CircularProgressIndicator()
       ],

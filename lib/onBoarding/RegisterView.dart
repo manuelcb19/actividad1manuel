@@ -60,7 +60,7 @@ class RegisterView extends StatelessWidget{
 
             }
 
-            Navigator.of(_context).pushNamed("/menuview");
+            Navigator.of(_context).pushNamed("/homeview");
           }
           catch (e) {
             print(e);

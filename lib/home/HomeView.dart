@@ -6,8 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../componentes/CustomTextField.dart';
-
 class HomeView extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -25,6 +23,7 @@ class _HomeViewState extends State<HomeView>{
   FirebaseFirestore db = FirebaseFirestore.instance;
   
   late CustomUsuario perfil;
+  int _selectedIndex = 0;
 
   Map<String, dynamic> miDiccionario = {};
 
@@ -47,38 +46,85 @@ class _HomeViewState extends State<HomeView>{
 
       DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
       usuario = docSnap.data()!;
+
       print("Se ha cargado el usuario su nombre es "+usuario.nombre+" y su edad es: "+ usuario.edad.toString());
 
       perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
 
       print("Se ha cargado el perfil su nombre es "+perfil.nombre+" y su edad es: "+ perfil.edad.toString());
 
-      setState(() {
-        miDiccionario = {
-          'Nombre': usuario.nombre,
-          'Edad': usuario.edad,
-        };
-      });
+
+
+
+
+
   }
+
+  void onClickAceptar()
+  {
+    setState(() {
+      miDiccionario = {
+        'Nombre': perfil.nombre,
+        'Edad': perfil.edad,
+      };
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Libreria(Nombre provisional no final)"),),
-      body: Center(
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      appBar: AppBar(
+        title: Text("Libreria(Nombre provisional no final)"),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
+              ),
+              itemCount: 3,
+              itemBuilder: creadorDeItemMatriz,
             ),
-            itemCount: 3,
-            itemBuilder: creadorDeItemMatriz
-        ),
+          ),
+          TextButton(onPressed: onClickAceptar, child: Text("Consultar perfil"),),
+        ],
       ),
-
     );
-  }
+  }/*
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed, //Agregar esta línea
+        currentIndex: _selectedIndex,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Colors.blue,
+              size: 30,
+            ),
+            label: 'Inicio',
+            activeIcon: Icon(
+              Icons.home,
+              color: Colors.red,
+              size: 30,
+            ),
+          ),
+          // Agrega más elementos del menú aquí
+        ],
+        // Agrega las propiedades y eventos que desees para el BottomNavigationBar
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
+    );
+  }*/
+
   /*
   @override
   Widget build(BuildContext context) {

@@ -19,9 +19,9 @@ class _HomeViewState extends State<HomeView>{
 
   TextEditingController bdUsuarioNombre = TextEditingController();
   TextEditingController bdUsuarioEdad = TextEditingController();
-  
+
   FirebaseFirestore db = FirebaseFirestore.instance;
-  
+
   late CustomUsuario perfil;
   int _selectedIndex = 0;
 
@@ -36,27 +36,22 @@ class _HomeViewState extends State<HomeView>{
 
   void conseguirUsuario() async {
 
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-      DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
-          uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
-        toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
+    DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
+        uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
+      toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
 
-      CustomUsuario usuario;
+    CustomUsuario usuario;
 
-      DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
-      usuario = docSnap.data()!;
+    DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
+    usuario = docSnap.data()!;
 
-      print("Se ha cargado el usuario su nombre es "+usuario.nombre+" y su edad es: "+ usuario.edad.toString());
+    print("Se ha cargado el usuario su nombre es "+usuario.nombre+" y su edad es: "+ usuario.edad.toString());
 
-      perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
+    perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
 
-      print("Se ha cargado el perfil su nombre es "+perfil.nombre+" y su edad es: "+ perfil.edad.toString());
-
-
-
-
-
+    print("Se ha cargado el perfil su nombre es "+perfil.nombre+" y su edad es: "+ perfil.edad.toString());
 
   }
 
@@ -93,38 +88,7 @@ class _HomeViewState extends State<HomeView>{
         ],
       ),
     );
-  }/*
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, //Agregar esta línea
-        currentIndex: _selectedIndex,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.blue,
-              size: 30,
-            ),
-            label: 'Inicio',
-            activeIcon: Icon(
-              Icons.home,
-              color: Colors.red,
-              size: 30,
-            ),
-          ),
-          // Agrega más elementos del menú aquí
-        ],
-        // Agrega las propiedades y eventos que desees para el BottomNavigationBar
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
-    );
-  }*/
-
+  }
   /*
   @override
   Widget build(BuildContext context) {

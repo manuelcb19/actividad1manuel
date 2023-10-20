@@ -1,3 +1,4 @@
+import 'package:actividad1manuel/ClasesPropias/CustomDrawer.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomGredCellView.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomCellView.dart';
@@ -108,22 +109,8 @@ class _HomeViewState extends State<HomeView>{
               onPressed: onClickAceptar, child: Text("Consultar perfil"),),
           ],
         ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text("Opción 1"),
-              onTap: () {
-              },
-            ),
-            ListTile(
-              title: Text("Opción 2"),
-              onTap: () {
-              },
-            ),
-          ],
-        ),
-      ),
+
+        drawer: CustomDrawer(sText: "opcion",)
     );
   }
 

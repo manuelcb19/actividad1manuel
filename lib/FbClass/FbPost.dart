@@ -17,15 +17,15 @@ class FbPost{
       ) {
     final data = snapshot.data();
     return FbPost(
-        titulo: data?['titulo'],
-        cuerpo: data?['cuerpo']
+        titulo: data?['Titulo'],
+        cuerpo: data?['Cuerpo']
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (titulo != null) "titulo": titulo,
-      if (cuerpo != null) "cuerpo": cuerpo
+      if (titulo != null) "Titulo": titulo,
+      if (cuerpo != null) "Cuerpo": cuerpo
     };
   }
 }

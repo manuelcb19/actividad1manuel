@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../FbClass/FbPost.dart';
+
 class HomeView extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -25,6 +27,8 @@ class _HomeViewState extends State<HomeView>{
   late CustomUsuario perfil;
   int _selectedIndex = 0;
 
+  final List<FbPost> posts = [];
+
   Map<String, dynamic> miDiccionario = {};
 
   @override
@@ -32,8 +36,24 @@ class _HomeViewState extends State<HomeView>{
     // TODO: implement initState
     super.initState();
     conseguirUsuario();
+    descargarPosts();
   }
 
+  void descargarPosts() async{
+    CollectionReference<FbPost> ref=db.collection("Posts")
+        .withConverter(fromFirestore: FbPost.fromFirestore,
+      toFirestore: (FbPost post, _) => post.toFirestore(),);
+
+
+    QuerySnapshot<FbPost> querySnapshot=await ref.get();
+    for(int i=0;i<querySnapshot.docs.length;i++){
+      setState(() {
+        posts.add(querySnapshot.docs[i].data());
+      });
+
+    }
+
+  }
   void conseguirUsuario() async {
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -68,27 +88,29 @@ class _HomeViewState extends State<HomeView>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Libreria(Nombre provisional no final)"),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
+        appBar: AppBar(
+          title: Text("Libreria(Nombre provisional no final)"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                ),
+                itemCount: posts.length,
+                itemBuilder: creadorDeItemMatriz,
               ),
-              itemCount: 3,
-              itemBuilder: creadorDeItemMatriz,
             ),
-          ),
-          TextButton(onPressed: onClickAceptar, child: Text("Consultar perfil"),),
-        ],
-      ),
-    );
-  }
+            TextButton(
+              onPressed: onClickAceptar, child: Text("Consultar perfil"),),
+          ],
+        ),
+      );
+    }
+
   /*
   @override
   Widget build(BuildContext context) {
@@ -115,7 +137,7 @@ class _HomeViewState extends State<HomeView>{
   }
 
   Widget? creadorDeItemLista(BuildContext context, int index){
-    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario),
+    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario)+" "+posts[index].titulo,
         iCodigoColor: 50,
         dFuenteTamanyo: 20);
   }
@@ -123,7 +145,7 @@ class _HomeViewState extends State<HomeView>{
 
 
   Widget? creadorDeItemMatriz(BuildContext context, int index){
-    return CustomGredCellView(sText: recorrerDiccionario(miDiccionario),
+    return CustomGredCellView(sText: recorrerDiccionario(miDiccionario)+" "+posts[index].titulo,
       dFontSize: 20,
       iColorCode: 0,
     );

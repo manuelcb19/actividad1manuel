@@ -108,8 +108,24 @@ class _HomeViewState extends State<HomeView>{
               onPressed: onClickAceptar, child: Text("Consultar perfil"),),
           ],
         ),
-      );
-    }
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text("Opción 1"),
+              onTap: () {
+              },
+            ),
+            ListTile(
+              title: Text("Opción 2"),
+              onTap: () {
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   /*
   @override

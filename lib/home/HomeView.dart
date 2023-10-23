@@ -6,8 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../FbClass/FbPost.dart';
-
 class HomeView extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +23,7 @@ class _HomeViewState extends State<HomeView>{
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   late CustomUsuario perfil;
-  final List<FbPost> posts = [];
+  int _selectedIndex = 0;
 
   Map<String, dynamic> miDiccionario = {};
 
@@ -34,7 +32,6 @@ class _HomeViewState extends State<HomeView>{
     // TODO: implement initState
     super.initState();
     conseguirUsuario();
-    descargarPosts();
   }
 
   void conseguirUsuario() async {
@@ -55,30 +52,7 @@ class _HomeViewState extends State<HomeView>{
     perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
 
     print("Se ha cargado el perfil su nombre es "+perfil.nombre+" y su edad es: "+ perfil.edad.toString());
-    {
-      setState(() {
-        miDiccionario = {
-          'Nombre': perfil.nombre,
-          'Edad': perfil.edad,
-        };
-      });
-    }
-  }
 
-  void descargarPosts() async {
-
-    CollectionReference<FbPost> ref = db.collection("Posts")
-        .withConverter(fromFirestore: FbPost.fromFirestore,
-      toFirestore: (FbPost post, _) => post.toFirestore(),);
-
-
-    QuerySnapshot<FbPost> querySnapshot = await ref.get();
-
-    for (int i = 0; i < querySnapshot.docs.length; i++) {
-      setState(() {
-        posts.add(querySnapshot.docs[i].data());
-      });
-    }
   }
 
   void onClickAceptar()
@@ -89,8 +63,6 @@ class _HomeViewState extends State<HomeView>{
         'Edad': perfil.edad,
       };
     });
-
-    print(posts[0].titulo);
   }
 
   @override
@@ -108,7 +80,7 @@ class _HomeViewState extends State<HomeView>{
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 5,
               ),
-              itemCount: miDiccionario.length,
+              itemCount: 3,
               itemBuilder: creadorDeItemMatriz,
             ),
           ),
@@ -117,8 +89,7 @@ class _HomeViewState extends State<HomeView>{
       ),
     );
   }
-
-/*
+  /*
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -126,7 +97,7 @@ class _HomeViewState extends State<HomeView>{
       appBar: AppBar(title: Text("KYTY"),),
       body: ListView.separated(
         padding: EdgeInsets.all(8),
-        itemCount: miDiccionario.length,
+        itemCount: 3,
         itemBuilder: creadorDeItemLista,
         separatorBuilder: creadorDeSeparadorLista,
       ),
@@ -144,7 +115,7 @@ class _HomeViewState extends State<HomeView>{
   }
 
   Widget? creadorDeItemLista(BuildContext context, int index){
-    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario)+"Contenido posts: "+posts[index].titulo,
+    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario),
         iCodigoColor: 50,
         dFuenteTamanyo: 20);
   }
@@ -152,7 +123,7 @@ class _HomeViewState extends State<HomeView>{
 
 
   Widget? creadorDeItemMatriz(BuildContext context, int index){
-    return CustomGredCellView(sText:  recorrerDiccionario(miDiccionario),
+    return CustomGredCellView(sText: recorrerDiccionario(miDiccionario),
       dFontSize: 20,
       iColorCode: 0,
     );

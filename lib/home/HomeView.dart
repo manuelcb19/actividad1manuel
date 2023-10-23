@@ -109,7 +109,7 @@ class _HomeViewState extends State<HomeView> {
     Widget build(BuildContext context) {
       // TODO: implement build
       return Scaffold(
-          appBar: AppBar(title: Text("KYTY"),),
+          appBar: AppBar(title: Text("Libreria"),),
           body: Center(
             child: celdasOLista(bIsList),
           ),

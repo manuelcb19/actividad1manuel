@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
         children: [
           TextButton(onPressed: () => onBotonesClicked!(0), child: Icon(Icons.list,color: Colors.pink,)),
           TextButton(onPressed: () => onBotonesClicked!(1), child: Icon(Icons.grid_view,color: Colors.pink,)),
-          IconButton(onPressed: () => onBotonesClicked!(2), icon: Image.asset("resources/logo_kyty.png"))
+          IconButton(onPressed: () => onBotonesClicked!(2), icon: Image.asset("resources/imageninicial.png"))
         ]
     );
   }

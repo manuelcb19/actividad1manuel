@@ -2,7 +2,6 @@ import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 
 import '../FbClass/FbPost.dart';
 
-/*
 class DataHolder {
 
   static final DataHolder _dataHolder = new DataHolder._internal();
@@ -10,16 +9,18 @@ class DataHolder {
   String sNombre="libreria DataHolder";
   late String sPostTitle;
   late FbPost selectedPost;
-
   DataHolder._internal() {
     sPostTitle="Titulo de Post";
-  }
 
+  }
 
   factory DataHolder(){
     return _dataHolder;
+
   }
-}*/
+
+}
+/*
 class DataHolder {
 
   static final DataHolder _dataHolder = new DataHolder._internal();
@@ -35,6 +36,5 @@ class DataHolder {
   factory DataHolder(){
     return _dataHolder;
   }
-
-
 }
+*/

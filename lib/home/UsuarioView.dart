@@ -9,11 +9,11 @@ class UsuarioView extends StatelessWidget{
     // TODO: implement build
 
     return Scaffold(
-      appBar: AppBar(title: Text(DataHolder().NombrePersona)),
+      appBar: AppBar(title: Text(DataHolder().sPostTitle)),
       body: Column(
         children: [
-          Text(DataHolder().Usuario.nombre),
-          Text(DataHolder().Usuario.edad.toString()),
+          Text(DataHolder().selectedPost.titulo),
+          Text(DataHolder().selectedPost.cuerpo),
           //Image.network(DataHolder().selectedPost.sUrlImg),
           TextButton(onPressed: null, child: Text("Like"))
         ],

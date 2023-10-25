@@ -84,8 +84,8 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void onItemListClicked(int index){
-    //DataHolder().Usuario=listaUsuarios[index];
-    DataHolder().Usuario=perfil;
+    DataHolder().selectedPost=posts[index];
+    //DataHolder().Usuario=perfil;
     Navigator.of(context).pushNamed("/usuarioview");
 
   }
@@ -104,6 +104,10 @@ class _HomeViewState extends State<HomeView> {
       else if (indice == 2) {
         exit(0);
       }
+      else if(indice == 3)
+        {
+          Navigator.of(context).pushNamed("/usuarioview");
+        }
     });
 
     void onClickAceptar() {

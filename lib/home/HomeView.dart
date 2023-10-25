@@ -92,22 +92,21 @@ class _HomeViewState extends State<HomeView> {
 
 
   void onBottonMenuPressed(int indice) {
-    // TODO: implement onBottonMenuPressed
-
     setState(() {
-      if (indice == 0) {
-        bIsList = true;
-      }
-      else if (indice == 1) {
-        bIsList = false;
-      }
-      else if (indice == 2) {
-        exit(0);
-      }
-      else if(indice == 3)
-        {
+      switch(indice)
+      {
+        case 0:
+          bIsList = true;
+          break;
+        case 1:
+          bIsList = false;
+          break;
+        case 2:
+          exit(0);
+        case 3:
           Navigator.of(context).pushNamed("/usuarioview");
-        }
+          break;
+      }
     });
 
     void onClickAceptar() {

@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../FbClass/FbPost.dart';
+import '../Singletone/DataHolder.dart';
 import '../onBoarding/LoginView.dart';
 
 class HomeView extends StatefulWidget{
@@ -79,6 +80,13 @@ class _HomeViewState extends State<HomeView> {
     print("Se ha cargado el perfil su nombre es " + perfil.nombre +
         " y su edad es: " + perfil.edad.toString());
   }
+
+  void onItemListClicked(int index){
+    DataHolder().selectedPost=posts[index];
+    Navigator.of(context).pushNamed("/postview");
+
+  }
+
 
   void onBottonMenuPressed(int indice) {
     // TODO: implement onBottonMenuPressed
@@ -191,7 +199,9 @@ class _HomeViewState extends State<HomeView> {
       return CustomCellView(sTexto: recorrerDiccionario(miDiccionario) + " " +
           posts[index].titulo,
           iCodigoColor: 50,
-          dFuenteTamanyo: 20);
+          dFuenteTamanyo: 20,
+          iPosicion: index,
+          onItemListClickedFun:onItemListClicked);
     }
 
 

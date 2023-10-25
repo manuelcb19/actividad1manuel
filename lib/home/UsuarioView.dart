@@ -1,20 +1,19 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Singletone/DataHolder.dart';
 
-class PostView extends StatelessWidget{
+class UsuarioView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
 
     return Scaffold(
-      appBar: AppBar(title: Text(DataHolder().sNombre)),
+      appBar: AppBar(title: Text(DataHolder().NombrePersona)),
       body: Column(
         children: [
-         // Text(DataHolder().selectedPost.titulo),
-         // Text(DataHolder().selectedPost.cuerpo),
+          Text(DataHolder().Usuario.nombre),
+          Text(DataHolder().Usuario.edad.toString()),
           //Image.network(DataHolder().selectedPost.sUrlImg),
           TextButton(onPressed: null, child: Text("Like"))
         ],

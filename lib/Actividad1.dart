@@ -1,7 +1,9 @@
 
+import 'package:actividad1manuel/home/UsuarioView.dart';
 import 'package:actividad1manuel/imageninicial/SplashView.dart';
 import 'package:flutter/material.dart';
 
+import 'home/PostView.dart';
 import 'onBoarding/LoginView.dart';
 import 'home/HomeView.dart';
 import 'onBoarding/PerfilView.dart';
@@ -19,6 +21,8 @@ class Actividad1 extends StatelessWidget{
         '/homeview':(context) => HomeView(),
         '/splashview':(context) => SplashView(),
         '/perfilview':(context) => PerfilView(),
+        '/postview':(context) => PostView(),
+        '/usuarioview':(context) => UsuarioView(),
     },
 
       initialRoute: '/splashview',

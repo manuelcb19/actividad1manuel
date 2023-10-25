@@ -35,6 +35,8 @@ class _HomeViewState extends State<HomeView> {
   bool bIsList = false;
 
   final List<FbPost> posts = [];
+  final List<CustomUsuario> listaUsuarios = [];
+
 
   Map<String, dynamic> miDiccionario = {};
 
@@ -82,8 +84,9 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void onItemListClicked(int index){
-    DataHolder().selectedPost=posts[index];
-    Navigator.of(context).pushNamed("/postview");
+    //DataHolder().Usuario=listaUsuarios[index];
+    DataHolder().Usuario=perfil;
+    Navigator.of(context).pushNamed("/usuarioview");
 
   }
 

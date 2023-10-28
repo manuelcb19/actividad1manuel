@@ -7,6 +7,7 @@ import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:actividad1manuel/ClasesPropias/CustomCellView.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,9 @@ class _HomeViewState extends State<HomeView> {
 
   Map<String, dynamic> miDiccionario = {};
 
+
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -61,6 +65,34 @@ class _HomeViewState extends State<HomeView> {
       });
     }
   }
+  void uploadImageToFirebase(File imageFile) async {
+    if (imageFile != null) {
+      // Obtiene la referencia de Firebase Storage
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('user_profile_images/${DateTime.now()}.png');
+
+      // Sube la imagen
+      UploadTask uploadTask = storageReference.putFile(imageFile);
+
+      // Monitorea el progreso de la carga
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        print('Progreso: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100}%');
+      });
+
+      // Espera a que se complete la carga
+      await uploadTask.whenComplete(() {
+        print('Carga completada');
+      });
+
+      // Obtiene la URL de la imagen después de cargarla
+      String downloadURL = await storageReference.getDownloadURL();
+
+      // Guarda esta URL en tu base de datos si es necesario.
+    }
+  }
+
+
 
   void conseguirUsuario() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -124,13 +156,11 @@ class _HomeViewState extends State<HomeView> {
       // TODO: implement build
       return Scaffold(
           appBar: AppBar(title: Text("Libreria"),),
-          body: Center(
-            child: celdasOLista(bIsList),
-          ),
-          bottomNavigationBar: CustomButton(
-              onBotonesClicked: this.onBottonMenuPressed),
-
-          drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap,)
+        body: Center(
+          child: celdasOLista(bIsList),
+        ),
+        bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),
+        drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap),
       );
     }
 

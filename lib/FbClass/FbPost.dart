@@ -5,10 +5,12 @@ class FbPost{
 
   final String titulo;
   final String cuerpo;
+  final String sUrlImg;
 
   FbPost ({
     required this.titulo,
-    required this.cuerpo
+    required this.cuerpo,
+    required this.sUrlImg,
   });
 
   factory FbPost.fromFirestore(
@@ -18,7 +20,8 @@ class FbPost{
     final data = snapshot.data();
     return FbPost(
         titulo: data?['Titulo'],
-        cuerpo: data?['Cuerpo']
+        cuerpo: data?['Cuerpo'],
+        sUrlImg: data?['sUrlImg'] != null ? data!['sUrlImg'] : ""
     );
   }
 

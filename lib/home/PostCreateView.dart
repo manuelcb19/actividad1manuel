@@ -26,7 +26,7 @@ class PostCreateView extends StatelessWidget{
             child:  customTextField(contenido: "introduzca su usuario", tecUsername: tecTitulo,oscuro: false,),
           ),
           Padding(padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            child: customTextField(contenido: "introduzca su usuario", tecUsername: tecTitulo,oscuro: false,),
+            child: customTextField(contenido: "introduzca su usuario", tecUsername: tecCuerpo,oscuro: false,),
           ),
           Image.network(""),
           TextButton(onPressed: () {

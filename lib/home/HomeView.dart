@@ -160,7 +160,15 @@ class _HomeViewState extends State<HomeView> {
           child: celdasOLista(bIsList),
         ),
         bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),
-        drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap),
+        drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap,),
+        floatingActionButton:FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/postcreateview");
+          },
+          child: Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
+        /**/
       );
     }
 

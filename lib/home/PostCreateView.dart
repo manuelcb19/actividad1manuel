@@ -1,5 +1,6 @@
 
 import 'package:actividad1manuel/FbClass/FbPostId.dart';
+import 'package:actividad1manuel/singletone/FirebaseAdmin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:actividad1manuel/componentes/CustomTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,28 +13,38 @@ import '../Singletone/DataHolder.dart';
 
 
 
-class PostCreateView extends StatelessWidget{
+class PostCreateView extends StatefulWidget{
+  @override
+  State<PostCreateView> createState() => _PostCreateViewState();
+}
+
+class _PostCreateViewState extends State<PostCreateView> {
+
   FirebaseFirestore db = FirebaseFirestore.instance;
   TextEditingController tecTitulo=TextEditingController();
   TextEditingController tecPost=TextEditingController();
-  late String id;
-  late String nombreUsuario;
+  FirebaseAdmin conexion = FirebaseAdmin();
+  late CustomUsuario usuario;
+  DataHolder gggg= DataHolder();
+
+  String id=".";
+  String nombreUsuario = ".";
+
+  @override
+  void initState() async {
+    super.initState();
+    usuario = await conexion.conseguirUsuario();
+     // Llama al método para cargar el usuario al iniciar la pantalla.
+  }
 
   void conseguirUsuario() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
-        uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
-      toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
+    CustomUsuario? pruebaUsuario = await conexion.conseguirUsuario();
 
-    CustomUsuario usuario;
+    nombreUsuario = pruebaUsuario.nombre;
 
-    DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
-    usuario = docSnap.data()!;
+    print(nombreUsuario + " " + pruebaUsuario.edad.toString());
 
-    nombreUsuario = usuario.nombre;
-
-    id = uid;
   }
 
   @override
@@ -50,6 +61,10 @@ class PostCreateView extends StatelessWidget{
           Padding(padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: customTextField(contenido: "introduzca el posts", tecUsername: tecPost,oscuro: false,),
           ),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            child: customTextField(contenido: nombreUsuario, tecUsername: tecPost,oscuro: false,),
+          ),
+
           Image.network(""),
           TextButton(onPressed: conseguirUsuario, child: Text("CargarUsuarios"),),
           TextButton(onPressed: () {
@@ -69,6 +84,4 @@ class PostCreateView extends StatelessWidget{
     );
 
   }
-
-
 }

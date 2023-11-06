@@ -47,7 +47,7 @@ class Actividad1 extends StatelessWidget{
           '/postcreateview':(context) => PostCreateView(),
           '/phoneLogin':(context) => PhoneLogin(),
         },
-        initialRoute: '/phoneLogin',
+        initialRoute: '/splashview',
       );
 
     }

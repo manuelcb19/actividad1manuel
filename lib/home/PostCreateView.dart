@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../ClasesPropias/CustomUsuario.dart';
 import '../FbClass/FbPost.dart';
 import '../Singletone/DataHolder.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 
@@ -24,18 +25,29 @@ class _PostCreateViewState extends State<PostCreateView> {
   TextEditingController tecTitulo=TextEditingController();
   TextEditingController tecPost=TextEditingController();
   FirebaseAdmin conexion = FirebaseAdmin();
-  late CustomUsuario usuario;
+  //late CustomUsuario usuario;
   DataHolder gggg= DataHolder();
+  ImagePicker _picker = ImagePicker();
 
   String id=".";
   String nombreUsuario = ".";
 
-  @override
+ /* @override
   void initState() async {
     super.initState();
     usuario = await conexion.conseguirUsuario();
      // Llama al método para cargar el usuario al iniciar la pantalla.
   }
+*/
+  void onGalleyClicked() async{
+
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+}
+
+void onCameraClicked() async{
+
+}
 
   void conseguirUsuario() async {
 
@@ -66,6 +78,8 @@ class _PostCreateViewState extends State<PostCreateView> {
           ),
 
           Image.network(""),
+          TextButton(onPressed: onGalleyClicked, child: Text("CargarImagen"),),
+          TextButton(onPressed: conseguirUsuario, child: Text("selecionar imagen camara"),),
           TextButton(onPressed: conseguirUsuario, child: Text("CargarUsuarios"),),
           TextButton(onPressed: () {
             FbPostId postNuevo=new FbPostId(post: tecPost.text, usuario: nombreUsuario, titulo: tecTitulo.text, sUrlImg: "", id: id);

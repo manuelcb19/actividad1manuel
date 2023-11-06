@@ -20,8 +20,6 @@ class PerfilView extends StatelessWidget {
       
     };
 
-    //db.collection("Usuarios").add(usuario);
-
    String uidUsuario= FirebaseAuth.instance.currentUser!.uid;
    db.collection("Usuarios").doc(uidUsuario).set(usuario);
 

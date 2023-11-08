@@ -31,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
+  DataHolder dataHolder = DataHolder();
   late CustomUsuario perfil;
   int _selectedIndex = 0;
   bool bIsList = false;
@@ -95,24 +96,11 @@ class _HomeViewState extends State<HomeView> {
 
 
   void conseguirUsuario() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
-        uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
-      toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
 
-    CustomUsuario usuario;
+    perfil = await dataHolder.fbadmin.conseguirUsuario();
 
-    DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
-    usuario = docSnap.data()!;
 
-    print("Se ha cargado el usuario su nombre es " + usuario.nombre +
-        " y su edad es: " + usuario.edad.toString());
-
-    perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
-
-    print("Se ha cargado el perfil su nombre es " + perfil.nombre +
-        " y su edad es: " + perfil.edad.toString());
   }
 
   void onItemListClicked(int index){

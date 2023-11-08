@@ -24,9 +24,7 @@ class PerfilView extends StatelessWidget {
    db.collection("Usuarios").doc(uidUsuario).set(usuario);
 
   }
-
-
-
+  
   @override
   Widget build(BuildContext context) {
 

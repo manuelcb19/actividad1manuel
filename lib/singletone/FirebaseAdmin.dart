@@ -14,7 +14,9 @@ class FirebaseAdmin{
 
   Future<CustomUsuario> conseguirUsuario() async {
 
+
     String uid = FirebaseAuth.instance.currentUser!.uid;
+    print(uid);
 
     DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
         uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
@@ -25,7 +27,11 @@ class FirebaseAdmin{
     DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
     usuario = docSnap.data()!;
 
+    print(usuario.toString());
+
     return usuario;
+
+
 
   }
 

@@ -1,4 +1,6 @@
 
+import 'dart:html';
+
 import 'package:actividad1manuel/FbClass/FbPostId.dart';
 import 'package:actividad1manuel/singletone/FirebaseAdmin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,38 +26,44 @@ class _PostCreateViewState extends State<PostCreateView> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   TextEditingController tecTitulo=TextEditingController();
   TextEditingController tecPost=TextEditingController();
-  FirebaseAdmin conexion = FirebaseAdmin();
-  //late CustomUsuario usuario;
-  DataHolder gggg= DataHolder();
+  late CustomUsuario usuario;
+  DataHolder conexion= DataHolder();
   ImagePicker _picker = ImagePicker();
 
   String id=".";
   String nombreUsuario = ".";
+  File _imagePreview=File("");
 
- /* @override
-  void initState() async {
+ @override
+  void initState() {
     super.initState();
-    usuario = await conexion.conseguirUsuario();
+    conseguirUsuario();
+
      // Llama al método para cargar el usuario al iniciar la pantalla.
   }
-*/
+
   void onGalleyClicked() async{
 
     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
+    if(image!=null){
+      setState(() {
+        _imagePreview=File(image.path);
+      });
+    }
 }
 
 void onCameraClicked() async{
 
+    XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    if(image!=null){
+      setState(() {
+        _imagePreview=File(image.path);
+      });
 }
 
   void conseguirUsuario() async {
 
-    CustomUsuario? pruebaUsuario = await conexion.conseguirUsuario();
-
-    nombreUsuario = pruebaUsuario.nombre;
-
-    print(nombreUsuario + " " + pruebaUsuario.edad.toString());
+    usuario = await conexion.fbadmin.conseguirUsuario();
 
   }
 

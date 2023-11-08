@@ -109,8 +109,9 @@ void onCameraClicked() async{
           TextButton(onPressed: onGalleyClicked, child: Text("CargarImagen"),),
           TextButton(onPressed: onCameraClicked, child: Text("selecionar imagen camara"),),
           TextButton(onPressed: conseguirUsuario, child: Text("CargarUsuarios"),),
+          TextButton(onPressed: subirImagen, child: Text("Camara")),
           TextButton(onPressed: () {
-            FbPostId postNuevo=new FbPostId(post: tecPost.text, usuario: nombreUsuario, titulo: tecTitulo.text, sUrlImg: "", id: id);
+            FbPostId postNuevo=new FbPostId(post: tecPost.text, usuario: nombreUsuario, titulo: tecTitulo.text, sUrlImg: "gggggg", id: id);
 
             CollectionReference<FbPostId> postsRef = db.collection("PruebaPostUsuario")
                 .withConverter(
@@ -122,6 +123,7 @@ void onCameraClicked() async{
             children: [
             TextButton(onPressed: onGalleyClicked, child: Text("Galeria")),
             TextButton(onPressed: onCameraClicked, child: Text("Camara")),
+
             ],
             );
             postsRef.add(postNuevo);

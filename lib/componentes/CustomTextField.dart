@@ -7,8 +7,9 @@ class customTextField extends StatelessWidget
   TextEditingController tecUsername = TextEditingController();
   String contenido;
   bool oscuro;
+  String sHint;
 
-  customTextField({Key? key, required this.contenido, required this.tecUsername, required this.oscuro}) : super (key : key);
+  customTextField({Key? key, required this.contenido, required this.tecUsername, required this.oscuro, this.sHint="s"}) : super (key : key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,8 @@ class customTextField extends StatelessWidget
           obscureText: oscuro,
           decoration: InputDecoration(
               border:  OutlineInputBorder(),
-              hintText: contenido
+              hintText: contenido,
+              labelText: sHint
           ),
         )
         )

@@ -1,11 +1,12 @@
 
-import 'dart:html';
+import 'dart:io';
 
 import 'package:actividad1manuel/FbClass/FbPostId.dart';
 import 'package:actividad1manuel/singletone/FirebaseAdmin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:actividad1manuel/componentes/CustomTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../ClasesPropias/CustomUsuario.dart';
@@ -28,10 +29,12 @@ class _PostCreateViewState extends State<PostCreateView> {
   TextEditingController tecPost=TextEditingController();
   late CustomUsuario usuario;
   DataHolder conexion= DataHolder();
-  ImagePicker _picker = ImagePicker();
+
 
   String id=".";
   String nombreUsuario = ".";
+
+  ImagePicker _picker = ImagePicker();
   File _imagePreview=File("");
 
  @override
@@ -61,6 +64,23 @@ void onCameraClicked() async{
       });
 }
 
+    }
+
+  void subirImagen() async {
+    // Create a storage reference from our app
+    final storageRef = FirebaseStorage.instance.ref();
+
+// Create a reference to "mountains.jpg"
+    final rutaAFicheroEnNube = storageRef.child("imgs/mountains.jpg");
+
+    try {
+      await rutaAFicheroEnNube.putFile(_imagePreview);
+    } on FirebaseException catch (e) {
+      // ...
+    }
+    print("SE HA SUBIDO LA IMAGEN");
+  }
+
   void conseguirUsuario() async {
 
     usuario = await conexion.fbadmin.conseguirUsuario();
@@ -87,7 +107,7 @@ void onCameraClicked() async{
 
           Image.network(""),
           TextButton(onPressed: onGalleyClicked, child: Text("CargarImagen"),),
-          TextButton(onPressed: conseguirUsuario, child: Text("selecionar imagen camara"),),
+          TextButton(onPressed: onCameraClicked, child: Text("selecionar imagen camara"),),
           TextButton(onPressed: conseguirUsuario, child: Text("CargarUsuarios"),),
           TextButton(onPressed: () {
             FbPostId postNuevo=new FbPostId(post: tecPost.text, usuario: nombreUsuario, titulo: tecTitulo.text, sUrlImg: "", id: id);
@@ -97,7 +117,13 @@ void onCameraClicked() async{
               fromFirestore: FbPostId.fromFirestore,
               toFirestore: (FbPostId post, _) => post.toFirestore(),
             );
-
+            Image.file(_imagePreview,width: 400,height: 400,);
+            Row(
+            children: [
+            TextButton(onPressed: onGalleyClicked, child: Text("Galeria")),
+            TextButton(onPressed: onCameraClicked, child: Text("Camara")),
+            ],
+            );
             postsRef.add(postNuevo);
           }, child: Text("Postear"))
         ],

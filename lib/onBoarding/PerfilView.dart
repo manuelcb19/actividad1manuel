@@ -32,39 +32,42 @@ class PerfilView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Perfil'),
           centerTitle: true,
-          shadowColor: Colors.pink,
-          backgroundColor: Colors.deepOrange,
+          shadowColor: Colors.orangeAccent,
+          backgroundColor: Colors.orangeAccent,
         ),
+        backgroundColor: Colors.amber[200],
         body:
-        ConstrainedBox(constraints: BoxConstraints(
-          minWidth: 500,
-          minHeight: 700,
-          maxWidth: 1000,
-          maxHeight: 900,
-        ),
-          child: Column(
+        Center(
+          child: ConstrainedBox(constraints: BoxConstraints(
+            minWidth: 500,
+            minHeight: 700,
+            maxWidth: 1000,
+            maxHeight: 900,
+          ),
+            child: Column(
 
-            mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su usuario", tecUsername: tecNombre,oscuro: false,)
-              ),
+              children: [
+                Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                    child:  customTextField( tecUsername: tecNombre,oscuro: false, sHint: "Introduzca su usuario",)
+                ),
 
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su edad", tecUsername: tecEdad, oscuro: false,)
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                    child:  customTextField( tecUsername: tecEdad, oscuro: false,sHint: "Introduzca su edad",)
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
 
-                         TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-                          //TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
+                           TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+                            //TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
 
-                  ]
-              )
-            ],
-          ),)
+                    ]
+                )
+              ],
+            ),),
+        )
     );
 
   }

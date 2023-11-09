@@ -86,44 +86,47 @@ class RegisterView extends StatelessWidget{
         appBar: AppBar(
           title: const Text('Perfil'),
           centerTitle: true,
-          shadowColor: Colors.purple[600],
-          backgroundColor: Colors.purple[600],
+          shadowColor: Colors.orangeAccent,
+          backgroundColor: Colors.orangeAccent,
         ),
+        backgroundColor: Colors.amber[200],
         body:
-        ConstrainedBox(constraints: BoxConstraints(
-          minWidth: 500,
-          minHeight: 700,
-          maxWidth: 1000,
-          maxHeight: 900,
-        ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        Center(
+          child: ConstrainedBox(constraints: BoxConstraints(
+            minWidth: 500,
+            minHeight: 700,
+            maxWidth: 1000,
+            maxHeight: 900,
+          ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
+              children: [
       Text("Bienvenido a libreria Register",style: TextStyle(fontSize: 25)),
 
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioController,oscuro: false,)
+            child:  customTextField(tecUsername: usuarioController,oscuro: false,sHint: "introduzca su usuario",)
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca su contraseña", tecUsername: passwordMyController, oscuro: true,)
+            child:  customTextField( tecUsername: passwordMyController, oscuro: true,sHint: "introduzca su contraseña")
       ),
 
       Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-          child:  customTextField(contenido: "introduzca la contraseña de nuevo", tecUsername: passwordconfirmationMyController, oscuro: true,)
+            child:  customTextField( tecUsername: passwordconfirmationMyController, oscuro: true, sHint: "introduzca la contraseña de nuevo",)
       ),
 
       Row(mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-          TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
+          children: [
+            TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+            TextButton( onPressed: onClickCancelar, child: Text("Cancelar"),)
 
-        ],)
+          ],)
 
-            ],
-          ),)
+              ],
+            ),),
+        )
     );
   }
 

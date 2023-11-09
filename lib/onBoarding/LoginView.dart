@@ -71,39 +71,42 @@ class LoginView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Login'),
           centerTitle: true,
-          shadowColor: Colors.purple[600],
-          backgroundColor: Colors.purple[600],
+          shadowColor: Colors.orangeAccent,
+          backgroundColor: Colors.orangeAccent,
         ),
+      backgroundColor: Colors.amber[200],
         body:
-        ConstrainedBox(constraints: BoxConstraints(
-          minWidth: 500,
-          minHeight: 700,
-          maxWidth: 1000,
-          maxHeight: 900,
-        ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        Center(
+          child: ConstrainedBox(constraints: BoxConstraints(
+            minWidth: 500,
+            minHeight: 700,
+            maxWidth: 1000,
+            maxHeight: 900,
+          ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              Text("Bienvenido a librey", style: TextStyle(fontSize: 25)),
+              children: [
+                Text("Bienvenido a librey", style: TextStyle(fontSize: 25)),
 
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su usuario", tecUsername: usuarioControlador, oscuro: false,)
-              ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                    child:  customTextField(tecUsername: usuarioControlador, oscuro: false, sHint: "introduzca su usuario",)
+                ),
 
-              Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
-                  child:  customTextField(contenido: "introduzca su Contraseña", tecUsername: usuarioPassword, oscuro: true,)
-              ),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                    child:  customTextField(tecUsername: usuarioPassword, oscuro: true, sHint: "introduzca su Contraseña",)
+                ),
 
-              Row(mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
-                  TextButton( onPressed: onClickRegistrar, child: Text("Registrar"),),
+                Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(onPressed: onClickAceptar, child: Text("Aceptar"),),
+                    TextButton( onPressed: onClickRegistrar, child: Text("Registrar"),),
 
-                ],)
+                  ],)
 
-            ],
-          ),)
+              ],
+            ),),
+        )
     );
   }
 }

@@ -9,7 +9,7 @@ class customTextField extends StatelessWidget
   bool oscuro;
   String sHint;
 
-  customTextField({Key? key, required this.contenido, required this.tecUsername, required this.oscuro, this.sHint="s"}) : super (key : key);
+  customTextField({Key? key, this.contenido="", required this.tecUsername, required this.oscuro, this.sHint="s"}) : super (key : key);
 
   @override
   Widget build(BuildContext context) {

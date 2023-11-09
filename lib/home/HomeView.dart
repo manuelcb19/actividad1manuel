@@ -143,8 +143,12 @@ class _HomeViewState extends State<HomeView> {
     Widget build(BuildContext context) {
       // TODO: implement build
       return Scaffold(
-          appBar: AppBar(title: Text("Libreria"),),
+          appBar: AppBar(title: Text("Libreria"),
+        shadowColor: Colors.orangeAccent, // Color de sombra del AppBar
+        backgroundColor: Colors.orangeAccent,),
+        backgroundColor: Colors.amber[200],// Color de fondo del AppBar
         body: Center(
+
           child: celdasOLista(bIsList),
         ),
         bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),

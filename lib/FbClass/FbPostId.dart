@@ -23,16 +23,18 @@ class FbPostId{
       ) {
     final data = snapshot.data();
     return FbPostId(
+        sUrlImg: data?['sUrlImg'] != null ? data!['sUrlImg'] : "",
         usuario: data?['Usuario'],
         titulo: data?['Titulo'],
         post: data?['Post'],
         id: data?['IdUsuario'],
-        sUrlImg: data?['sUrlImg'] != null ? data!['sUrlImg'] : "",
+
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
+      if (sUrlImg != null) "sUrlImg": sUrlImg,
       if (usuario != null) "Usuario": usuario,
       if (titulo != null) "Titulo": titulo,
       if (post != null) "Post": post,

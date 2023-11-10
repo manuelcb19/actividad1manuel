@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../FbClass/FbPost.dart';
+import '../FbClass/FbPostId.dart';
 import '../Singletone/DataHolder.dart';
 import '../onBoarding/LoginView.dart';
 
@@ -37,6 +38,7 @@ class _HomeViewState extends State<HomeView> {
   bool bIsList = false;
 
   final List<FbPost> posts = [];
+  final List<FbPostId> postsId = [];
   final List<CustomUsuario> listaUsuarios = [];
 
 

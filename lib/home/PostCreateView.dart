@@ -133,7 +133,7 @@ void onCameraClicked() async{
           Padding(padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: customTextField(contenido: "introduzca el posts", tecUsername: tecPost,oscuro: false,),
           ),
-          Image.network(""),
+          //Image.network(""),
           TextButton(onPressed: onGalleyClicked, child: Text("CargarImagen"),),
           TextButton(onPressed: onCameraClicked, child: Text("selecionar imagen camara"),),
           TextButton(onPressed: conseguirUsuario, child: Text("CargarUsuarios"),),

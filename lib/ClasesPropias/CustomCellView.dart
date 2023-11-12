@@ -7,6 +7,7 @@ class CustomCellView extends StatelessWidget {
   final int iCodigoColor;
   final double dFuenteTamanyo;
   final int iPosicion;
+  final String imagen;
   final Function(int indice) onItemListClickedFun;
 
   const CustomCellView({super.key,
@@ -15,7 +16,9 @@ class CustomCellView extends StatelessWidget {
     required this.iCodigoColor,
     required this.dFuenteTamanyo,
     required this.iPosicion,
+    required this.imagen,
     required this.onItemListClickedFun});
+
 
 
   @override
@@ -26,7 +29,7 @@ class CustomCellView extends StatelessWidget {
           color: Colors.amber[iCodigoColor],
           child: Row(
             children: [
-              Image.asset("resources/logo_kyty2.png", width: 70,
+              Image.asset(imagen, width: 70,
                   height: 70),
               Text(sTexto, style: TextStyle(fontSize: dFuenteTamanyo)),
               TextButton(onPressed: null,

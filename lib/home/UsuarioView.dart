@@ -13,7 +13,9 @@ class UsuarioView extends StatelessWidget{
       body: Column(
         children: [
           Text(DataHolder().selectedPost.titulo),
-          Text(DataHolder().selectedPost.cuerpo),
+          Text(DataHolder().selectedPost.post),
+          Text(DataHolder().selectedPost.usuario),
+          Text(DataHolder().selectedPost.sUrlImg),
           //Image.network(DataHolder().selectedPost.sUrlImg),
           TextButton(onPressed: null, child: Text("Like"))
         ],

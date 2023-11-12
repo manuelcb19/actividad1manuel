@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../FbClass/FbPost.dart';
+import '../FbClass/FbPostId.dart';
 import 'FirebaseAdmin.dart';
 
 class DataHolder {
@@ -14,7 +15,7 @@ class DataHolder {
   FirebaseAdmin fbadmin=FirebaseAdmin();
   String sNombre="libreria DataHolder";
   late String sPostTitle;
-  late FbPost selectedPost;
+  late FbPostId selectedPost;
   DataHolder._internal() {
     sPostTitle="Titulo de Post";
 
@@ -41,7 +42,7 @@ class DataHolder {
     usuario = usuario;
 
   }
-
+/*
   void saveSelectedPostInCache() async{
     if(selectedPost!=null){
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,34 +52,56 @@ class DataHolder {
     }
 
   }
+*/
+  void saveSelectedPostInCache() async{
+    if(selectedPost!=null){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('postsusuario_surlimg', selectedPost!.sUrlImg);
+      prefs.setString('postsusuario_usuario', selectedPost!.usuario);
+      prefs.setString('postsusuario_titulo', selectedPost!.titulo);
+      prefs.setString('postsusuario_post', selectedPost!.post);
+      prefs.setString('postsusuario_IdUsuario', selectedPost!.id);
 
-  void insertPostEnFB(FbPost postNuevo){
-    CollectionReference<FbPost> postsRef = db.collection("Posts")
+    }
+
+  }
+
+  void insertPostEnFB(FbPostId postNuevo){
+    CollectionReference<FbPostId> postsRef = db.collection("postsusuario")
         .withConverter(
-      fromFirestore: FbPost.fromFirestore,
-      toFirestore: (FbPost post, _) => post.toFirestore(),
+      fromFirestore: FbPostId.fromFirestore,
+      toFirestore: (FbPostId post, _) => post.toFirestore(),
     );
 
     postsRef.add(postNuevo);
   }
 
-  Future<FbPost?> loadFbPost() async{
+  Future<FbPostId?> loadPost() async{
     if(selectedPost!=null) return selectedPost;
 
     await Future.delayed(Duration(seconds: 10));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? fbpost_titulo = prefs.getString('fbpost_titulo');
-    fbpost_titulo ??= "";
-    String? fbpost_cuerpo = prefs.getString('fbpost_cuerpo');
-    if(fbpost_cuerpo==null){
-      fbpost_cuerpo="";
+    String? postsusuario_titulo = prefs.getString('post_titulo');
+    postsusuario_titulo ??= "";
+
+    String? postsusuario_cuerpo = prefs.getString('post_cuerpo');
+    if(postsusuario_cuerpo==null){
+      postsusuario_cuerpo="";
     }
-    String? fbpost_surlimg = prefs.getString('fbpost_surlimg');
-    if(fbpost_surlimg==null){
-      fbpost_surlimg="";
+    String? postsusuario_surlimg = prefs.getString('post_surlimg');
+    if(postsusuario_surlimg==null){
+      postsusuario_surlimg="";
     }
-    print("SHARED PREFERENCES!!!  ----->>>>> "+fbpost_titulo);
-    selectedPost=FbPost(titulo: fbpost_titulo, cuerpo: fbpost_cuerpo, sUrlImg: fbpost_surlimg);
+    String? postsusuario_usuario = prefs.getString('post_usuario');
+    if(postsusuario_usuario == null){
+      postsusuario_usuario = "";
+    }
+
+
+
+    print("SHARED PREFERENCES!!!  ----->>>>> "+postsusuario_titulo);
+    //selectedPost=FbPost(titulo: fbpost_titulo, cuerpo: fbpost_cuerpo, sUrlImg: fbpost_surlimg);
+    selectedPost=new FbPostId(post: postsusuario_cuerpo, titulo: postsusuario_titulo, usuario: postsusuario_usuario,sUrlImg: postsusuario_surlimg, id: "1");
     return selectedPost;
   }
 

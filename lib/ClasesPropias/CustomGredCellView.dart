@@ -5,11 +5,13 @@ class CustomGredCellView extends StatelessWidget{
 
   final String sText;
   final int iColorCode;
+  final String imagen;
   final double dFontSize;
 
   const CustomGredCellView({super.key,
     required this.sText,
     required this.iColorCode,
+    required this.imagen,
     required this.dFontSize});
 
 
@@ -20,7 +22,8 @@ class CustomGredCellView extends StatelessWidget{
         decoration: BoxDecoration(
             image: DecorationImage(
                 opacity: 0.3,
-                image: NetworkImage("https://media1.giphy.com/media/Q5RjtPsU4Ds5ByAVI9/giphy.gif?cid=6c09b952oceo79bkg7hzpbm007jfk9tcj4b6b262q2rn6azn&ep=v1_gifs_search&rid=giphy.gif&ct=g"),
+                image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/kitymanuel-489a1.appspot.com/o/posts%2FZmKoioLe8UhTQaa00kQQwOaJlAE3%2Fimgs%2F1699621916168.jpg?alt=media&token=5e18f2e7-ca54-4c81-95e2-b4a35b7f23a3.jpg"),
+                //image: NetworkImage(imagen+".png"),
                 fit: BoxFit.cover
             )
         ),

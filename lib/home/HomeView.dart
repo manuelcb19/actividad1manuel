@@ -32,13 +32,12 @@ class _HomeViewState extends State<HomeView> {
 
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  DataHolder dataHolder = DataHolder();
   late CustomUsuario perfil;
   int _selectedIndex = 0;
   bool bIsList = false;
 
-  final List<FbPost> posts = [];
-  final List<FbPostId> postsId = [];
+  final List<FbPostId> posts = [];
+  //final List<FbPostId> postsId = [];
   final List<CustomUsuario> listaUsuarios = [];
 
 
@@ -56,17 +55,19 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void descargarPosts() async {
-    CollectionReference<FbPost> ref = db.collection("Posts")
-        .withConverter(fromFirestore: FbPost.fromFirestore,
-      toFirestore: (FbPost post, _) => post.toFirestore(),);
 
+    CollectionReference<FbPostId> postsRef = db.collection("PostUsuario")
+        .withConverter(
+      fromFirestore: FbPostId.fromFirestore,
+      toFirestore: (FbPostId post, _) => post.toFirestore(),);
 
-    QuerySnapshot<FbPost> querySnapshot = await ref.get();
+    QuerySnapshot<FbPostId> querySnapshot = await postsRef.get();
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       setState(() {
         posts.add(querySnapshot.docs[i].data());
       });
     }
+    print("la lista tiene este " + posts.length.toString());
   }
   void uploadImageToFirebase(File imageFile) async {
     if (imageFile != null) {
@@ -98,15 +99,29 @@ class _HomeViewState extends State<HomeView> {
 
 
   void conseguirUsuario() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
+    DocumentReference<CustomUsuario> enlace = db.collection("Usuarios").doc(
+        uid).withConverter(fromFirestore: CustomUsuario.fromFirestore,
+      toFirestore: (CustomUsuario usuario, _) => usuario.toFirestore(),);
 
-    perfil = await dataHolder.fbadmin.conseguirUsuario();
+    CustomUsuario usuario;
 
+    DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
+    usuario = docSnap.data()!;
 
+    print("Se ha cargado el usuario su nombre es " + usuario.nombre +
+        " y su edad es: " + usuario.edad.toString());
+
+    perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
+
+    print("Se ha cargado el perfil su nombre es " + perfil.nombre +
+        " y su edad es: " + perfil.edad.toString());
   }
 
   void onItemListClicked(int index){
     DataHolder().selectedPost=posts[index];
+
     //DataHolder().Usuario=perfil;
     Navigator.of(context).pushNamed("/usuarioview");
 
@@ -118,7 +133,14 @@ class _HomeViewState extends State<HomeView> {
       switch(indice)
       {
         case 0:
+          descargarPosts();
+          print("casa");
+          if(posts.isEmpty)
+            {
+              print("la lista esta vacia");
+            }
           bIsList = true;
+
           break;
         case 1:
           bIsList = false;
@@ -235,18 +257,20 @@ class _HomeViewState extends State<HomeView> {
 
     Widget? creadorDeItemLista(BuildContext context, int index) {
       return CustomCellView(sTexto: recorrerDiccionario(miDiccionario) + " " +
-          posts[index].titulo,
+          posts[index].post,
           iCodigoColor: 50,
           dFuenteTamanyo: 20,
           iPosicion: index,
+          imagen: posts[index].sUrlImg,
           onItemListClickedFun:onItemListClicked);
     }
 
 
     Widget? creadorDeItemMatriz(BuildContext context, int index) {
       return CustomGredCellView(
-        sText: recorrerDiccionario(miDiccionario) + " " + posts[index].titulo,
+        sText: recorrerDiccionario(miDiccionario) + " " + posts[index].post,
         dFontSize: 20,
+        imagen: posts[index].sUrlImg,
         iColorCode: 0,
       );
     }

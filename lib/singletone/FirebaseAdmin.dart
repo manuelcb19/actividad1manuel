@@ -29,12 +29,10 @@ class FirebaseAdmin{
 
     print(usuario.toString());
 
-    return usuario;
+    CustomUsuario perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
 
-
+    return perfil;
 
   }
-
-
 
 }

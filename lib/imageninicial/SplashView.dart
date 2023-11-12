@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../ClasesPropias/CustomUsuario.dart';
@@ -41,7 +42,15 @@ class _SplashViewState extends State<SplashView>{
           usuario = docSnap.data()!;
 
       if (usuario != null) {
-        Navigator.of(context).popAndPushNamed("/homeview");
+        if(kIsWeb)
+          {
+            Navigator.of(context).popAndPushNamed("/homeview");
+          }
+        else
+          {
+            Navigator.of(context).popAndPushNamed("/homeviewmovil");
+          }
+
 
       }
 

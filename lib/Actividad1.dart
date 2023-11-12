@@ -6,6 +6,7 @@ import 'package:actividad1manuel/onBoarding/PhoneLogin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'home/HomeViewMovil.dart';
 import 'home/PostView.dart';
 import 'onBoarding/LoginView.dart';
 import 'home/HomeView.dart';
@@ -39,7 +40,7 @@ class Actividad1 extends StatelessWidget{
         routes: {
           '/loginview':(context) => LoginView(),
           '/registerview':(context) => RegisterView(),
-          '/homeview':(context) => HomeView(),
+          '/homeviewmovil':(context) => HomeViewMovil(),
           '/splashview':(context) => SplashView(),
           '/perfilview':(context) => PerfilView(),
           '/postview':(context) => PostView(),

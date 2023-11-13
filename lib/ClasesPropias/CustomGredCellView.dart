@@ -19,12 +19,14 @@ class CustomGredCellView extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+        height: 600,
+        width: 600,
         decoration: BoxDecoration(
             image: DecorationImage(
                 opacity: 0.3,
-                image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/kitymanuel-489a1.appspot.com/o/posts%2FZmKoioLe8UhTQaa00kQQwOaJlAE3%2Fimgs%2F1699621916168.jpg?alt=media&token=5e18f2e7-ca54-4c81-95e2-b4a35b7f23a3.jpg"),
-                //image: NetworkImage(imagen+".png"),
-                fit: BoxFit.cover
+               //image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/kitymanuel-489a1.appspot.com/o/posts%2FZmKoioLe8UhTQaa00kQQwOaJlAE3%2Fimgs%2F1699621916168.jpg?alt=media&token=5e18f2e7-ca54-4c81-95e2-b4a35b7f23a3.jpg"),
+                image: NetworkImage(imagen),
+                fit: BoxFit.contain
             )
         ),
         color: Colors.amber[iColorCode],
@@ -36,10 +38,6 @@ class CustomGredCellView extends StatelessWidget{
             TextButton(onPressed: null, child: Text("+",style: TextStyle(fontSize: dFontSize)))
           ],
         )
-
     );
   }
-
-
-
 }

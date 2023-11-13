@@ -35,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
   late CustomUsuario perfil;
   int _selectedIndex = 0;
   bool bIsList = false;
+  final Map<String,FbPostId> mapPosts = Map();
 
   final List<FbPostId> posts = [];
   //final List<FbPostId> postsId = [];
@@ -54,7 +55,38 @@ class _HomeViewState extends State<HomeView> {
     descargarPosts();
   }
 
-  void descargarPosts() async {
+  void descargarPosts() async{
+
+    posts.clear();
+
+    CollectionReference<FbPostId> postsRef = db.collection("PostUsuario")
+        .withConverter(
+      fromFirestore: FbPostId.fromFirestore,
+      toFirestore: (FbPostId post, _) => post.toFirestore(),);
+
+    postsRef.snapshots().listen(datosDescargados, onError: descargaPostError,);
+
+  }
+
+  void datosDescargados(QuerySnapshot<FbPostId> postsdescargados)
+  {
+    print("NUMERO DE POSTS ACTUALIZADOS>>>> "+postsdescargados.docChanges.length.toString());
+
+    for(int i=0;i<postsdescargados.docChanges.length;i++){
+      FbPostId temp = postsdescargados.docChanges[i].doc.data()!;
+      mapPosts[postsdescargados.docChanges[i].doc.id]=temp;
+    }
+    setState(() {
+      posts.clear();
+      posts.addAll(mapPosts.values);
+    });
+  }
+
+  void descargaPostError(error){
+    print("Listen failed: $error");
+  }
+
+  void descargarPostsMej() async {
 
     CollectionReference<FbPostId> postsRef = db.collection("PostUsuario")
         .withConverter(
@@ -120,9 +152,9 @@ class _HomeViewState extends State<HomeView> {
           descargarPosts();
           print("casa");
           if(posts.isEmpty)
-            {
-              print("la lista esta vacia");
-            }
+          {
+            print("la lista esta vacia");
+          }
           bIsList = true;
 
           break;
@@ -147,32 +179,32 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-    @override
-    Widget build(BuildContext context) {
-      // TODO: implement build
-      return Scaffold(
-          appBar: AppBar(title: Text("Libreria"),
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(title: Text("Libreria"),
         shadowColor: Colors.orangeAccent, // Color de sombra del AppBar
         backgroundColor: Colors.orangeAccent,),
-        backgroundColor: Colors.amber[200],// Color de fondo del AppBar
-        body: Center(
+      backgroundColor: Colors.amber[200],// Color de fondo del AppBar
+      body: Center(
 
-          child: celdasOLista(bIsList),
-        ),
-        bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),
-        drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap,),
-        floatingActionButton:FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed("/postcreateview");
-          },
-          child: Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
-        /**/
-      );
-    }
+        child: celdasOLista(bIsList),
+      ),
+      bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),
+      drawer: CustomDrawer(onItemTap: fHomeViewDrawerOnTap,),
+      floatingActionButton:FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/postcreateview");
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
+      /**/
+    );
+  }
 
-    /*@override
+  /*@override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -200,7 +232,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 */
-    /*
+  /*
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -215,15 +247,15 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 */
-    String recorrerDiccionario(Map diccionario) {
-      String valores = '';
+  String recorrerDiccionario(Map diccionario) {
+    String valores = '';
 
-      for (String p in diccionario.keys) {
-        dynamic valor = diccionario[p];
-        valores += p + " : " + valor.toString() + " ";
-      }
-      return valores;
+    for (String p in diccionario.keys) {
+      dynamic valor = diccionario[p];
+      valores += p + " : " + valor.toString() + " ";
     }
+    return valores;
+  }
 
   void fHomeViewDrawerOnTap(int indice){
     print("---->>>> "+indice.toString());
@@ -239,49 +271,49 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-    Widget? creadorDeItemLista(BuildContext context, int index) {
-      return CustomCellView(sTexto: recorrerDiccionario(miDiccionario) + " " +
-          posts[index].post,
-          iCodigoColor: 50,
-          dFuenteTamanyo: 20,
-          iPosicion: index,
-          imagen: posts[index].sUrlImg,
-          onItemListClickedFun:onItemListClicked);
-    }
-
-
-    Widget? creadorDeItemMatriz(BuildContext context, int index) {
-      return CustomGredCellView(
-        sText: recorrerDiccionario(miDiccionario) + " " + posts[index].post,
-        dFontSize: 20,
+  Widget? creadorDeItemLista(BuildContext context, int index) {
+    return CustomCellView(sTexto: recorrerDiccionario(miDiccionario) + " " +
+        posts[index].post,
+        iCodigoColor: 50,
+        dFuenteTamanyo: 20,
+        iPosicion: index,
         imagen: posts[index].sUrlImg,
-        iColorCode: 0,
-      );
-    }
+        onItemListClickedFun:onItemListClicked);
+  }
 
-    Widget creadorDeSeparadorLista(BuildContext context, int index) {
-      return Column(
-        children: [
-          Divider(),
-        ],
-      );
-    }
 
-    Widget celdasOLista(bool isList) {
-      if (isList) {
-        return ListView.separated(
-          padding: EdgeInsets.all(8),
+  Widget? creadorDeItemMatriz(BuildContext context, int index) {
+    return CustomGredCellView(
+      sText: recorrerDiccionario(miDiccionario) + " " + posts[index].post,
+      dFontSize: 20,
+      imagen: posts[index].sUrlImg,
+      iColorCode: 0,
+    );
+  }
+
+  Widget creadorDeSeparadorLista(BuildContext context, int index) {
+    return Column(
+      children: [
+        Divider(),
+      ],
+    );
+  }
+
+  Widget celdasOLista(bool isList) {
+    if (isList) {
+      return ListView.separated(
+        padding: EdgeInsets.all(8),
+        itemCount: posts.length,
+        itemBuilder: creadorDeItemLista,
+        separatorBuilder: creadorDeSeparadorLista,
+      );
+    } else {
+      return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5),
           itemCount: posts.length,
-          itemBuilder: creadorDeItemLista,
-          separatorBuilder: creadorDeSeparadorLista,
-        );
-      } else {
-        return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5),
-            itemCount: posts.length,
-            itemBuilder: creadorDeItemMatriz
-        );
-      }
+          itemBuilder: creadorDeItemMatriz
+      );
     }
   }
+}

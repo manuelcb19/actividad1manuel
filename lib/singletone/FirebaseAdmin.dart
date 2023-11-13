@@ -1,6 +1,8 @@
+
 import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class FirebaseAdmin{
 
@@ -30,5 +32,9 @@ class FirebaseAdmin{
     return usuario;
 
   }
+
+  bool esweb(){
+    return kIsWeb;
+    }
 
 }

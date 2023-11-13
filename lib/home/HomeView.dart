@@ -153,7 +153,8 @@ class _HomeViewState extends State<HomeView> {
           print("casa");
           if(posts.isEmpty)
           {
-            print("la lista esta vacia");
+            bool es = dataHolder.fbadmin.esweb();
+            print("la lista esta vacia"+es.toString());
           }
           bIsList = true;
 

@@ -27,11 +27,7 @@ class FirebaseAdmin{
     DocumentSnapshot<CustomUsuario> docSnap = await enlace.get();
     usuario = docSnap.data()!;
 
-    print(usuario.toString());
-
-    CustomUsuario perfil = new CustomUsuario(nombre: usuario.nombre, edad: usuario.edad);
-
-    return perfil;
+    return usuario;
 
   }
 

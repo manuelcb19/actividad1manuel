@@ -55,78 +55,82 @@ class CustomCellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return InkWell(
-      child: Container(
-        height: 600,
-        width: 600,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.3,
-            image: NetworkImage(imagen),
-            fit: BoxFit.contain,
+    return Container(
+      height: 800,
+      margin: EdgeInsets.symmetric(horizontal: 400), // Ajusta el margen del contenedor exterior
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          onItemListClickedFun(iPosicion);
+          //print("tapped on container " + iPosicion.toString());
+        },
+        child: Container(
+          height: 160, // Ajusta el tamaño del contenedor interno
+          width: 160, // Ajusta el tamaño del contenedor interno
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              opacity: 0.3,
+              image: NetworkImage(imagen),
+              fit: BoxFit.contain,
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 20, // Ajusta la posición vertical del texto
-              left: 20, // Ajusta la posición horizontal del texto
-              child: Text(
-                "usuario",
-                style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.black),
-              ),
-            ),
-            Positioned(
-              bottom: 20, // Ajusta la posición vertical del botón
-              right: 20, // Ajusta la posición horizontal del botón
-              child: TextButton(
-                onPressed: null,
-                child: Text("+", style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.white)),
-              ),
-            ),
-            Positioned(
-              bottom: -10, // Ajusta la posición vertical del área de comentarios
-              left: 10, // Ajusta la posición horizontal del área de comentarios
-              right: 20, // Ajusta la posición horizontal del área de comentarios
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 20, // Ajusta la posición vertical del texto
+                left: 20, // Ajusta la posición horizontal del texto
+                child: Text(
+                  "usuario",
+                  style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.black),
                 ),
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: 'Añadir un comentario...',
-                          hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+              ),
+              Positioned(
+                bottom: 20, // Ajusta la posición vertical del botón
+                right: 20, // Ajusta la posición horizontal del botón
+                child: TextButton(
+                  onPressed: null,
+                  child: Text("+", style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.white)),
+                ),
+              ),
+              Positioned(
+                bottom: -10, // Ajusta la posición vertical del área de comentarios
+                left: 10, // Ajusta la posición horizontal del área de comentarios
+                right: 20, // Ajusta la posición horizontal del área de comentarios
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: 'Añadir un comentario...',
+                            hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    TextButton(
-                      onPressed: () {
-                        // Agrega tu lógica para manejar el envío del comentario
-                      },
-                      child: Text(
-                        'Enviar',
-                        style: TextStyle(color: Colors.white),
+                      SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () {
+                          // Agrega tu lógica para manejar el envío del comentario
+                        },
+                        child: Text(
+                          'Enviar',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      onTap: () {
-        onItemListClickedFun(iPosicion);
-        //print("tapped on container " + iPosicion.toString());
-      },
     );
   }
 }

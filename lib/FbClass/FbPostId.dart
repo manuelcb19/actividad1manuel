@@ -17,6 +17,8 @@ class FbPostId{
     required this.id,
   });
 
+
+
   factory FbPostId.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options,

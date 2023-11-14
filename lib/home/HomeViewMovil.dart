@@ -220,11 +220,18 @@ class _HomeViewState extends State<HomeViewMovil> {
               },
             ),
           ),
+
         ),
         body: Center(
           child: celdasOLista(bIsList),
         ),
         bottomNavigationBar: CustomButton(onBotonesClicked: this.onBottonMenuPressed),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/postcreateview");
+          },
+          child: Icon(Icons.add),
+        ),
       ),
       drawer: SafeArea(
         child: Container(
@@ -392,6 +399,8 @@ class _HomeViewState extends State<HomeViewMovil> {
           dFuenteTamanyo: 20,
           iPosicion: index,
           imagen: posts[index].sUrlImg,
+          uid: posts[index].id,
+          usuarioPost: posts[index].usuario,
           onItemListClickedFun:onItemListClicked);
     }
 

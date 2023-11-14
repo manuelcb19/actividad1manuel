@@ -37,7 +37,7 @@ class _PostCreateViewState extends State<PostCreateView> {
   ImagePicker _picker = ImagePicker();
   File _imagePreview=File("");
 
-  late String imgUrl;
+  String imgUrl="";
 
  @override
   void initState() {

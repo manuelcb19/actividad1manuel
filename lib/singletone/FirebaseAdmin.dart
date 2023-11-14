@@ -33,6 +33,19 @@ class FirebaseAdmin{
 
   }
 
+  Future<CustomUsuario> obtenerUsuarioPorUID(String uid) async {
+
+      DocumentSnapshot<Map<String, dynamic>> datos =
+      await FirebaseFirestore.instance.collection("Usuarios").doc(uid).get();
+        Map<String, dynamic> usuarioData = datos.data()!;
+        CustomUsuario usuario = CustomUsuario(
+            nombre: usuarioData['nombre'],
+            edad: usuarioData['edad']);
+        return usuario;
+  }
+
+
+
   bool esweb(){
     return kIsWeb;
     }

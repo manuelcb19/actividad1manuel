@@ -1,8 +1,9 @@
+import 'package:actividad1manuel/ClasesPropias/CustomUsuario.dart';
 import 'package:actividad1manuel/Singletone/DataHolder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomCellView extends StatelessWidget {
+class CustomCellView extends StatefulWidget {
 
   final String sTexto;
   final int iCodigoColor;
@@ -10,6 +11,8 @@ class CustomCellView extends StatelessWidget {
   final int iPosicion;
   final String imagen;
   final Function(int indice) onItemListClickedFun;
+  final String uid;
+  final String usuarioPost;
 
 
   const CustomCellView({super.key,
@@ -19,41 +22,30 @@ class CustomCellView extends StatelessWidget {
     required this.dFuenteTamanyo,
     required this.iPosicion,
     required this.imagen,
+    required this.uid,
+    required this.usuarioPost,
     required this.onItemListClickedFun});
 
-
-/*
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return InkWell(
-      child: Container(
-          height: 600,
-          width: 600,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  opacity: 0.3,
-                  //image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/kitymanuel-489a1.appspot.com/o/posts%2FZmKoioLe8UhTQaa00kQQwOaJlAE3%2Fimgs%2F1699621916168.jpg?alt=media&token=5e18f2e7-ca54-4c81-95e2-b4a35b7f23a3.jpg"),
-                  image: NetworkImage(imagen),
-                  fit: BoxFit.contain
-              )
-          ),
-          child: Row(
-            children: [
-              Text(sTexto, style: TextStyle(fontSize: dFuenteTamanyo)),
-              TextButton(onPressed: null,
-                  child: Text("+", style: TextStyle(fontSize: dFuenteTamanyo)))
-            ],
-          )
+  State<CustomCellView> createState() => _CustomCellViewState();
+}
+    @override
+    void initState() {
+      // TODO: implement initState
 
-      ),
-      onTap: () {
-        onItemListClickedFun(iPosicion);
-        //print("tapped on container " + iPosicion.toString());
-      },
-    );
+
+    }
+
+
+class _CustomCellViewState extends State<CustomCellView> {
+  Future<String> usuarioNombre() async {
+
+    DataHolder dataHolder = DataHolder();
+    CustomUsuario usuario = await dataHolder.fbadmin.obtenerUsuarioPorUID(widget.uid);
+    print(usuario.nombre);
+
+    return usuario.nombre;
   }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +58,7 @@ class CustomCellView extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: () {
-              onItemListClickedFun(iPosicion);
+              widget.onItemListClickedFun(widget.iPosicion);
               //print("tapped on container " + iPosicion.toString());
             },
             child: Container(
@@ -75,7 +67,7 @@ class CustomCellView extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   opacity: 0.3,
-                  image: NetworkImage(imagen),
+                  image: NetworkImage(widget.imagen),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -84,9 +76,8 @@ class CustomCellView extends StatelessWidget {
                   Positioned(
                     top: 20, // Ajusta la posición vertical del texto
                     left: 20, // Ajusta la posición horizontal del texto
-                    child: Text(
-                      "usuario",
-                      style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.black),
+                    child: Text(widget.usuarioPost,
+                      style: TextStyle(fontSize: widget.dFuenteTamanyo, color: Colors.black),
                     ),
                   ),
                   Positioned(
@@ -94,7 +85,7 @@ class CustomCellView extends StatelessWidget {
                     right: 20, // Ajusta la posición horizontal del botón
                     child: TextButton(
                       onPressed: null,
-                      child: Text("+", style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.white)),
+                      child: Text("+", style: TextStyle(fontSize: widget.dFuenteTamanyo, color: Colors.white)),
                     ),
                   ),
                   Positioned(
@@ -148,7 +139,7 @@ class CustomCellView extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 opacity: 0.3,
-                image: NetworkImage(imagen),
+                image: NetworkImage(widget.imagen),
                 fit: BoxFit.contain,
               ),
             ),
@@ -159,7 +150,7 @@ class CustomCellView extends StatelessWidget {
                   left: 20, // Ajusta la posición horizontal del texto
                   child: Text(
                     "usuario",
-                    style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.black),
+                    style: TextStyle(fontSize: widget.dFuenteTamanyo, color: Colors.black),
                   ),
                 ),
                 Positioned(
@@ -167,7 +158,7 @@ class CustomCellView extends StatelessWidget {
                   right: 20, // Ajusta la posición horizontal del botón
                   child: TextButton(
                     onPressed: null,
-                    child: Text("+", style: TextStyle(fontSize: dFuenteTamanyo, color: Colors.white)),
+                    child: Text("+", style: TextStyle(fontSize: widget.dFuenteTamanyo, color: Colors.white)),
                   ),
                 ),
                 Positioned(
@@ -209,7 +200,7 @@ class CustomCellView extends StatelessWidget {
             ),
           ),
           onTap: () {
-            onItemListClickedFun(iPosicion);
+            widget.onItemListClickedFun(widget.iPosicion);
             //print("tapped on container " + iPosicion.toString());
           },
         );

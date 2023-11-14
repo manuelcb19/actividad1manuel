@@ -33,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   DataHolder dataHolder = DataHolder();
   late CustomUsuario perfil;
+  late CustomUsuario perfilTemporal;
   int _selectedIndex = 0;
   bool bIsList = false;
   final Map<String,FbPostId> mapPosts = Map();
@@ -145,19 +146,11 @@ class _HomeViewState extends State<HomeView> {
 
 
   void onBottonMenuPressed(int indice) {
-    setState(() {
+    setState((){
       switch(indice)
       {
         case 0:
-          descargarPosts();
-          print("casa");
-          if(posts.isEmpty)
-          {
-            bool es = dataHolder.fbadmin.esweb();
-            print("la lista esta vacia"+es.toString());
-          }
           bIsList = true;
-
           break;
         case 1:
           bIsList = false;
@@ -279,6 +272,8 @@ class _HomeViewState extends State<HomeView> {
         dFuenteTamanyo: 20,
         iPosicion: index,
         imagen: posts[index].sUrlImg,
+        uid: posts[index].id,
+        usuarioPost: posts[index].usuario,
         onItemListClickedFun:onItemListClicked);
   }
 

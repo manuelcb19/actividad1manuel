@@ -1,6 +1,6 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
-admin.initializeApp();  // Aquí está la única inicialización necesaria
+admin.initializeApp();
 const logger = require("firebase-functions/logger");
 const functions = require("firebase-functions");
 
@@ -86,3 +86,22 @@ exports.addTimestampOnCreate = functions.firestore
       return null;
     }
   });
+
+  exports.archiveDeletedElement = functions.firestore
+    .document('Usuarios/{userId}')
+    .onDelete(async (snapshot, context) => {
+      try {
+        const deletedData = snapshot.data();
+
+        deletedData.deletedTimestamp = admin.firestore.FieldValue.serverTimestamp();
+
+        await admin.firestore().collection('Archivo').doc(context.params.userId).set(deletedData);
+
+        functions.logger.info(`Elemento con ID ${context.params.userId} se archivó correctamente.`, { structuredData: true });
+
+        return null;
+      } catch (error) {
+        console.error('Error al archivar el elemento eliminado:', error);
+        return null;
+      }
+    });

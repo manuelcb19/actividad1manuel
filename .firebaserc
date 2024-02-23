@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "kitymanuel-489a1"
-  }
+    "default": "kitymanuel-489a1",
+    "manuelcb": "kitymanuel-489a1"
+  },
+  "targets": {},
+  "etags": {}
 }

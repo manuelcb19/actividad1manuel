@@ -1,19 +1,30 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-const {onRequest} = require("firebase-functions/v2/https");
+const { onRequest } = require("firebase-functions/v2/https");
+const admin = require("firebase-admin");
+admin.initializeApp();
 const logger = require("firebase-functions/logger");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+exports.insertElement = onRequest(async (request, response) => {
+  try {
+    // Obtén los datos de la solicitud HTTP
+    const data = request.body; // Asumiendo que los datos se envían en el cuerpo de la solicitud POST
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    // Inserta los datos en la raíz de la base de datos
+    const result = await admin.database().ref().push(data);
+
+    // Obtiene el ID del elemento insertado
+    const elementId = result.key;
+
+    // Log para registrar en Firebase
+    logger.info(`Elemento con ID ${elementId} fue insertado correctamente.`, { structuredData: true });
+
+    // Envía una respuesta al cliente
+    response.status(200).send(`Elemento con ID ${elementId} fue insertado correctamente.`);
+  } catch (error) {
+    console.error('Error al insertar el elemento:', error);
+
+    // Log para registrar en Firebase
+    logger.error('Error al insertar el elemento en la base de datos.', { error: error });
+
+    response.status(500).send('Error al insertar el elemento en la base de datos.');
+  }
+});

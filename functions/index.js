@@ -1,6 +1,6 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
-admin.initializeApp();
+admin.initializeApp();  // Aquí está la única inicialización necesaria
 const logger = require("firebase-functions/logger");
 const functions = require("firebase-functions");
 
@@ -31,20 +31,17 @@ exports.deleteElement = functions.https.onRequest(async (request, response) => {
 
     const elementId = request.query.elementId;
 
-
     if (!elementId) {
       return response.status(400).send('El parámetro elementId es obligatorio.');
     }
 
     await admin.firestore().collection('Usuarios').doc(elementId).delete();
 
-
     functions.logger.info(`El elemento con ID ${elementId} se eliminó correctamente.`, { structuredData: true });
 
     response.status(200).send(`El elemento con ID ${elementId} se eliminó correctamente.`);
   } catch (error) {
     console.error('Error al eliminar el elemento:', error);
-
 
     functions.logger.error('Error al eliminar el elemento en Firestore.', { error: error });
 
@@ -70,3 +67,22 @@ exports.getAllElements = onRequest(async (request, response) => {
     response.status(500).send('Error al obtener los elementos de Firestore.');
   }
 });
+
+exports.addTimestampOnCreate = functions.firestore
+  .document('Usuarios/{userId}')
+  .onCreate(async (snapshot, context) => {
+    try {
+      const docRef = snapshot.ref;
+      const timestamp = admin.firestore.FieldValue.serverTimestamp();
+
+      await docRef.update({ timestamp });
+
+      functions.logger.info(`Se agregó el campo "timestamp" al documento ${context.params.userId} con la marca de tiempo ${new Date(timestamp)}.`, { structuredData: true });
+
+      console.log(`Se agregó el campo "timestamp" al documento ${context.params.userId} con la marca de tiempo ${new Date(timestamp)}.`);
+      return null;
+    } catch (error) {
+      console.error('Error al agregar el timestamp:', error);
+      return null;
+    }
+  });

@@ -30,7 +30,6 @@ class _PostCreateViewState extends State<PostCreateView> {
   late CustomUsuario usuario;
   DataHolder conexion= DataHolder();
 
-
   String id=".";
   String nombreUsuario = ".";
 
@@ -76,18 +75,15 @@ void onCameraClicked() async{
   }
 
   void subirPost() async {
-    //-----------------------INICIO DE SUBIR IMAGEN--------
-    // Create a storage reference from our app
-    final storageRef = FirebaseStorage.instance.ref();
 
-// Create a reference to "mountains.jpg"
+    final storageRef = FirebaseStorage.instance.ref();
     String rutaEnNube=
         "posts/"+FirebaseAuth.instance.currentUser!.uid+"/imgs/"+
             DateTime.now().millisecondsSinceEpoch.toString()+".jpg";
     print("RUTA DONDE VA A GUARDARSE LA IMAGEN: "+rutaEnNube);
 
     final rutaAFicheroEnNube = storageRef.child(rutaEnNube);
-    // Create the file metadata
+
     final metadata = SettableMetadata(contentType: "image/jpeg");
     try {
       await rutaAFicheroEnNube.putFile(_imagePreview,metadata);
@@ -107,6 +103,7 @@ void onCameraClicked() async{
   void subirElPost()
   {
 
+    subirPost();
     print(imgUrl);
 
     FbPostId postNuevo=new FbPostId(post: tecPost.text, usuario: usuario.nombre, titulo: tecTitulo.text, sUrlImg: imgUrl, id: conexion.fbadmin.uid);
@@ -153,10 +150,5 @@ void onCameraClicked() async{
 
       ),
     );
-
-
-
-
-
   }
 }

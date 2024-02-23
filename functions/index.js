@@ -50,4 +50,23 @@ exports.deleteElement = functions.https.onRequest(async (request, response) => {
 
     response.status(500).send('Error al eliminar el elemento en Firestore.');
   }
-})
+});
+
+exports.getAllElements = onRequest(async (request, response) => {
+  try {
+
+    const usuariosSnapshot = await admin.firestore().collection('Usuarios').get();
+
+    const usuariosData = usuariosSnapshot.docs.map(doc => doc.data());
+
+    logger.info('Se obtuvieron todos los elementos correctamente.', { structuredData: true });
+
+    response.status(200).json(usuariosData);
+  } catch (error) {
+    console.error('Error al obtener los elementos:', error);
+
+    logger.error('Error al obtener los elementos de Firestore.', { error: error });
+
+    response.status(500).send('Error al obtener los elementos de Firestore.');
+  }
+});

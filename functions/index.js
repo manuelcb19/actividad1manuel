@@ -67,37 +67,38 @@ exports.getAllElements = onRequest(async (request, response) => {
     response.status(500).send('Error al obtener los elementos de Firestore.');
   }
 });
+  exports.addCustomDateOnCreate = functions.firestore
+    .document('Usuarios/{userId}')
+    .onCreate(async (snapshot, context) => {
+      try {
+        const docRef = snapshot.ref;
+        const customDateField = 'fechaCreacion';
+        const currentDate = new Date().toISOString();
 
-exports.addTimestampOnCreate = functions.firestore
-  .document('Usuarios/{userId}')
-  .onCreate(async (snapshot, context) => {
-    try {
-      const docRef = snapshot.ref;
-      const timestamp = admin.firestore.FieldValue.serverTimestamp();
+        await docRef.update({ [customDateField]: currentDate });
 
-      await docRef.update({ timestamp });
+        functions.logger.info(`Se agregó el campo "${customDateField}" al documento ${context.params.userId} con la fecha de creación ${currentDate}.`, { structuredData: true });
+        console.log(`Se agregó el campo "${customDateField}" al documento ${context.params.userId} con la fecha de creación ${currentDate}.`);
 
-      functions.logger.info(`Se agregó el campo "timestamp" al documento ${context.params.userId} con la marca de tiempo ${new Date(timestamp)}.`, { structuredData: true });
+        return null;
+      } catch (error) {
+        console.error('Error al agregar la fecha de creación:', error);
+        return null;
+      }
+    });
 
-      console.log(`Se agregó el campo "timestamp" al documento ${context.params.userId} con la marca de tiempo ${new Date(timestamp)}.`);
-      return null;
-    } catch (error) {
-      console.error('Error al agregar el timestamp:', error);
-      return null;
-    }
-  });
-
-  exports.archiveDeletedElement = functions.firestore
+  exports.archiveDeletedElementWithCustomDate = functions.firestore
     .document('Usuarios/{userId}')
     .onDelete(async (snapshot, context) => {
       try {
         const deletedData = snapshot.data();
+        const customDateField = 'deletedFecha';
+        const currentDate = new Date().toISOString();
 
-        deletedData.deletedTimestamp = admin.firestore.FieldValue.serverTimestamp();
-
+        deletedData[customDateField] = currentDate;
+        delete deletedData.deletedTimestamp;
         await admin.firestore().collection('Archivo').doc(context.params.userId).set(deletedData);
-
-        functions.logger.info(`Elemento con ID ${context.params.userId} se archivó correctamente.`, { structuredData: true });
+        functions.logger.info(`Elemento con ID ${context.params.userId} se archivó correctamente con la fecha de eliminación ${currentDate}.`, { structuredData: true });
 
         return null;
       } catch (error) {
